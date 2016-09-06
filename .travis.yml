@@ -1,9 +1,7 @@
 language: node_js
 node_js:
   - '0.10'
-addons:
-    code_climate:
-        repo_token: a1c4aa718715809c31607044232fe89211bbf89215914ce6941c6b07a1cd601d
+
 env:
   global:
   - CODECLIMATE_REPO_TOKEN=a1c4aa718715809c31607044232fe89211bbf89215914ce6941c6b07a1cd601d codeclimate-test-reporter < coverage/**/lcov.info
