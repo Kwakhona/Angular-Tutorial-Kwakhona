@@ -1,11 +1,10 @@
 // Karma configuration
-// Generated on 2016-09-05
+// Generated on 2016-08-16
 
 module.exports = function(config) {
   'use strict';
 
   config.set({
-
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
 
@@ -18,16 +17,13 @@ module.exports = function(config) {
       'jasmine'
     ],
 
-    preprocessors: {
-        'app/scripts/**/*.js': 'coverage'
-    },
-
     // list of files / patterns to load in the browser
     files: [
       // bower:js
       'bower_components/jquery/dist/jquery.js',
       'bower_components/angular/angular.js',
       'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js',
+      'bower_components/bootstrap/dist/js/bootstrap.js',
       'bower_components/angular-animate/angular-animate.js',
       'bower_components/angular-cookies/angular-cookies.js',
       'bower_components/angular-resource/angular-resource.js',
@@ -60,33 +56,36 @@ module.exports = function(config) {
       'PhantomJS'
     ],
 
+    preprocessors: {
+      'app/scripts/**/*.js': 'coverage'
+    }, 
+
     // Which plugins to enable
     plugins: [
-            "karma-coverage",
-            "karma-phantomjs-launcher",
-            'karma-chrome-launcher',
-            //'karma-firefox-launcher',
-            "karma-jasmine"
-        ],
+      "karma-coverage",
+      "karma-phantomjs-launcher",
+      'karma-chrome-launcher',
+      'karma-phantomjs-launcher',
+      'karma-jasmine'
+    ],
 
+    reporters: ['progress', 'coverage'],
+
+    coverageReporter: {
+      reporters: [
+          {type: 'lcov', dir: 'coverage/'},
+          {type: 'cobertura', dir: 'coverage/', file: 'cobertura.xml'}
+      ]
+    },
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
     singleRun: false,
 
     colors: true,
-
+    
     // level of logging
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
     logLevel: config.LOG_INFO,
-
-    reporters: ['progress', 'coverage'],
-
-    coverageReporter: {
-        reporters: [
-            {type: 'lcov', dir: 'coverage/'},
-            {type: 'cobertura', dir: 'coverage/', file: 'cobertura.xml'}
-        ]
-    },
 
     // Uncomment the following lines if you are using grunt's server to run the tests
     // proxies: {
