@@ -13,7 +13,7 @@ angular.module('angularTutorialKwakhonaApp')
     .controller('LoginCtrl', function($scope, $location, UserAuthentication) {
         
         $scope.Login = function () {
-            UserAuthentication.login($scope.user.username, $scope.user.password)
+            UserAuthentication.login($scope.username, $scope.password)
                 .then(function(){
                    $location.path('/user');
                 })

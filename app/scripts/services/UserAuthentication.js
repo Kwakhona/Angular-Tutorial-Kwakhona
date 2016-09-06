@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * @ngdoc function
+ * @ngdoc service
  * @name angularTutorialKwakhonaApp.service:UserAuthentication
  * @description
  * # UserAuthentication
@@ -47,7 +47,7 @@ angular.module('angularTutorialKwakhonaApp')
                 deferred.resolve(response, status, headers, config);
             }).error(function (response, status, headers, config) {
                 deferred.reject(response, status, headers, config);
-                console.log(JSON.stringify(response));
+                // console.log(JSON.stringify(response));
             });
 
             return deferred.promise;
