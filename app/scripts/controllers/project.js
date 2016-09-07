@@ -150,9 +150,9 @@ angular.module('angularTutorialKwakhonaApp')
         // deleting a project
         $scope.deleteProject = function (project) {
             if ($window.confirm("Are you sure you want to delete project: " + project.title) === true) {
-                project.deleteProject(project.pk)
+                projectService.deleteProject(project.pk)
                     .then(function () {
-
+                        $route.reload();
                     })
                     .catch(function (error) {
                         $window.alert("Error: " + error);
