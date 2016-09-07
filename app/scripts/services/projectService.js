@@ -21,7 +21,7 @@ angular.module('angularTutorialKwakhonaApp')
         projectApi.createProject = function(project){
             data = project;
 
-            return httpHelpers.update(url, data);
+            return httpHelpers.create(url, data);
         };
         // update a Project
         projectApi.updateProject = function(pk, project){
@@ -36,7 +36,7 @@ angular.module('angularTutorialKwakhonaApp')
         projectApi.deleteProject = function(pk){
             data.projectId = pk;
 
-            return httpHelpers.update(url, data);
+            return httpHelpers.remove(url, data);
         };
 
         return projectApi;
