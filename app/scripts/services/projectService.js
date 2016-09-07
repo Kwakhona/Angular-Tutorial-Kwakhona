@@ -15,6 +15,9 @@ angular.module('angularTutorialKwakhonaApp')
 
         // get all Projects
         projectApi.getProjects = function(){
+            if(angular.isDefined(data.projectId)){
+                data.projectId = '';
+            }
             return httpHelpers.get(url, data);
         };
         // create a new Project

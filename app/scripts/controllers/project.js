@@ -15,7 +15,7 @@ angular.module('angularTutorialKwakhonaApp')
                 $scope.projects = response.data;
             })
             .catch(function (error) {
-                $window.alert("Error: " + error);
+                $window.alert(JSON.stringify(error));
             });
 
         // updating add/edit form
@@ -46,7 +46,7 @@ angular.module('angularTutorialKwakhonaApp')
 
         };
 
-        $scope.changeMonth = function (month) {
+        $scope.changeMonth = function(month) {
             switch (month) {
                 case "Jan":
                     month = "01";
@@ -87,12 +87,18 @@ angular.module('angularTutorialKwakhonaApp')
             }
             return month;
         };
+        $scope.isDefined = function(value){
+            if(angular.isDefined(value)){
+                return true;
+            }
+            return false;
+        };
 
         // creating a project
         $scope.addProject = function () {
             var day, month, year;
 
-            if (angular.isDefined($scope.project.start_date)) {
+            if ($scope.isDefined($scope.project.start_date)) {
                 day = $scope.project.start_date.toString().substr(8, 2);
                 month = $scope.project.start_date.toString().substr(4, 3);
                 year = $scope.project.start_date.toString().substr(11, 4);
@@ -101,7 +107,7 @@ angular.module('angularTutorialKwakhonaApp')
                 $scope.project.start_date = year + "-" + month + "-" + day;
             }
 
-            if (angular.isDefined($scope.project.end_date)) {
+            if ($scope.isDefined($scope.project.end_date)) {
                 day = $scope.project.end_date.toString().substr(8, 2);
                 month = $scope.project.end_date.toString().substr(4, 3);
                 year = $scope.project.end_date.toString().substr(11, 4);
@@ -116,18 +122,18 @@ angular.module('angularTutorialKwakhonaApp')
                     $scope.form = { 'added': true };
                 })
                 .catch(function (error) {
-                    if (angular.isDefined(error.data)) {
+                    if ($scope.isDefined(error.data)) {
                         var err = "ERRORS \n";
-                        if (angular.isDefined(error.data.title)) {
+                        if ($scope.isDefined(error.data.title)) {
                             err += "Title: " + error.data.title + "\n";
                         }
-                        if (angular.isDefined(error.data.description)) {
+                        if ($scope.isDefined(error.data.description)) {
                             err += "Description: " + error.data.description + "\n";
                         }
-                        if (angular.isDefined(error.data.start_date)) {
+                        if ($scope.isDefined(error.data.start_date)) {
                             err += "Start Date: " + error.data.start_date + "\n";
                         }
-                        if (angular.isDefined(error.data.end_date)) {
+                        if ($scope.isDefined(error.data.end_date)) {
                             err += "End Date: " + error.data.end_date + "\n";
                         }
                         $window.alert(err);
@@ -137,7 +143,7 @@ angular.module('angularTutorialKwakhonaApp')
 
         // updating a project
         $scope.updateProject = function () {
-            console.log($scope.project);
+            
             projectService.updateProject($scope.project.pk, $scope.project)
                 .then(function () {
                     $scope.form = { 'edited': true };
@@ -155,7 +161,7 @@ angular.module('angularTutorialKwakhonaApp')
                         $route.reload();
                     })
                     .catch(function (error) {
-                        $window.alert("Error: " + error);
+                        $window.alert(error);
                     });
             } else {
                 $window.alert("You have cancelled the deletion off project: " + project.title);
