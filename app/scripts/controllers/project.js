@@ -15,7 +15,7 @@ angular.module('angularTutorialKwakhonaApp')
                 $scope.projects = response.data;
             })
             .catch(function (error) {
-                $window.alert("Error: " + error);
+                $window.alert(JSON.stringify(error));
             });
 
         // updating add/edit form
@@ -143,7 +143,7 @@ angular.module('angularTutorialKwakhonaApp')
 
         // updating a project
         $scope.updateProject = function () {
-            console.log($scope.project);
+            
             projectService.updateProject($scope.project.pk, $scope.project)
                 .then(function () {
                     $scope.form = { 'edited': true };
@@ -161,7 +161,7 @@ angular.module('angularTutorialKwakhonaApp')
                         $route.reload();
                     })
                     .catch(function (error) {
-                        $window.alert("Error: " + error);
+                        $window.alert(error);
                     });
             } else {
                 $window.alert("You have cancelled the deletion off project: " + project.title);
