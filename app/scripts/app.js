@@ -35,10 +35,10 @@ angular
         controller: 'LoginCtrl',
         controllerAs: 'login'
       })
-      .when('/user', {
-        templateUrl: 'views/user_dashboard.html',
-        controller: 'UserCtrl',
-        controllerAs: 'user'
+      .when('/projects', {
+        templateUrl: 'views/project.html',
+        controller: 'ProjectCtrl',
+        controllerAs: 'projects'
       })
       .when('/about', {
         templateUrl: 'views/about.html',

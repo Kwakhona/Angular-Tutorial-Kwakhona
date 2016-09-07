@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name angularTutorialKwakhonaApp.controller:UserCtrl
+ * @name angularTutorialKwakhonaApp.controller:ProjectCtrl
  * @description
- * # UserCtrl
+ * # ProjectCtrl
  * Controller of the angularTutorialKwakhonaApp
  */
 angular.module('angularTutorialKwakhonaApp')
-    .controller('UserCtrl', function($scope, $window, projectService) {
+    .controller('ProjectCtrl', function($scope, $window, projectService) {
 
         projectService.getProjects()
             .then(function(response){

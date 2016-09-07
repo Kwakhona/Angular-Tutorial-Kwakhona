@@ -27,6 +27,14 @@ angular.module('angularTutorialKwakhonaApp')
                 url: url,
                 headers: headers
             });
+        }// create method
+        httpHelper.create = function (url, data) {
+            return $http({
+                method: 'POST',
+                url: url,
+                data: data,
+                headers: headers
+            });
         }
         // put method
         httpHelper.update = function(url, data) {

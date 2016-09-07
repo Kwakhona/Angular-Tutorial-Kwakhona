@@ -15,7 +15,7 @@ angular.module('angularTutorialKwakhonaApp')
         $scope.Login = function () {
             UserAuthentication.login($scope.username, $scope.password)
                 .then(function(){
-                   $location.path('/user');
+                   $location.path('/projects');
                 })
                 .catch(function(){
 
