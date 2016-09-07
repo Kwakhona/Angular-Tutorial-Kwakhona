@@ -18,7 +18,9 @@ angular.module('angularTutorialKwakhonaApp')
                    $location.path('/projects');
                 })
                 .catch(function(error){
-                    console.log(error);
+                    if(angular.isDefined(error.non_field_errors)){
+                        $window.alert("Error: "+ error.non_field_errors);
+                    }
                 });
         };
     });
