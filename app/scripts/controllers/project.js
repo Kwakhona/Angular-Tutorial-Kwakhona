@@ -35,7 +35,6 @@ angular.module('angularTutorialKwakhonaApp')
                 .then(function(){
                     $scope._edited = { 'success': true };
                     
-                    $route.reload();
                 })
                 .catch(function(error){
                     $window.alert("Error: "+ error);
