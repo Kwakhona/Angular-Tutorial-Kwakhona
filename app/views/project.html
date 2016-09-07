@@ -82,19 +82,19 @@
                                         <input type="date" class="form-control" placeholder="End Date" ng-if="!project.pk" ng-model="project.end_date" id="end" />
                                     </div>
                                     <div>
-                                        <label>is billable?</label>
-                                        <input type="checkbox" class="form-control" ng-model="project.is_billable" id="is_billable" />
+                                        <input type="checkbox" ng-model="project.is_billable" id="is_billable" />
+                                        <label>is billable? </label>
                                     </div>
                                     <div>
-                                        <label>is active?</label>
-                                        <input type="checkbox" class="form-control" ng-model="project.is_active" id="is_active" />
+                                        <input type="checkbox" ng-model="project.is_active" id="is_active" />
+                                        <label>is active? </label>
                                     </div>
                                 </form>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" ng-if="project.pk" ng-click="updateProject()">Save</button>
-                                <button type="button" class="btn btn-primary" ng-if="!project.pk" ng-click="addProject()">Add</button>
+                                <button type="button" class="btn btn-primary" ng-if="project.pk" ng-click="updateProject()" ng-disabled="!project.title || !project.description || !project.start_date ||!project.end_date">Save</button>
+                                <button type="button" class="btn btn-primary" ng-if="!project.pk" ng-click="addProject()" ng-disabled="!project.title || !project.description || !project.start_date ||!project.end_date">Add</button>
                             </div>
                         </div>
                     </div>
