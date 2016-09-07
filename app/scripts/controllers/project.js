@@ -18,35 +18,7 @@ angular.module('angularTutorialKwakhonaApp')
                 $window.alert(JSON.stringify(error));
             });
 
-        // updating add/edit form
-        $scope.UpdateForm = function (project) {
-            $scope.form = { 'edited': false, 'added': false };
-
-            if (project !== null) {
-                $scope.project = {
-                    'pk': project.pk,
-                    'title': project.title,
-                    'description': project.description,
-                    'start_date': project.start_date,
-                    'end_date': project.end_date,
-                    'is_billable': project.is_billable,
-                    'is_active': project.is_active
-                };
-            } else {
-                $scope.project = {
-                    'pk': '',
-                    'title': '',
-                    'description': '',
-                    'start_date': '',
-                    'end_date': '',
-                    'is_billable': false,
-                    'is_active': false
-                };
-            }
-
-        };
-
-        $scope.changeMonth = function(month) {
+        $scope.changeMonth = function (month) {
             switch (month) {
                 case "Jan":
                     month = "01";
@@ -87,13 +59,39 @@ angular.module('angularTutorialKwakhonaApp')
             }
             return month;
         };
-        $scope.isDefined = function(value){
-            if(angular.isDefined(value)){
+        $scope.isDefined = function (value) {
+            if (angular.isDefined(value)) {
                 return true;
             }
             return false;
         };
+        // updating add/edit form
+        $scope.UpdateForm = function (project) {
+            $scope.form = { 'edited': false, 'added': false };
 
+            if ($scope.isDefined(project)) {
+                $scope.project = {
+                    'pk': '',
+                    'title': '',
+                    'description': '',
+                    'start_date': '',
+                    'end_date': '',
+                    'is_billable': false,
+                    'is_active': false
+                };
+            } else {
+                $scope.project = {
+                    'pk': project.pk,
+                    'title': project.title,
+                    'description': project.description,
+                    'start_date': project.start_date,
+                    'end_date': project.end_date,
+                    'is_billable': project.is_billable,
+                    'is_active': project.is_active
+                };
+            }
+
+        };
         // creating a project
         $scope.addProject = function () {
             var day, month, year;
@@ -118,7 +116,7 @@ angular.module('angularTutorialKwakhonaApp')
 
 
             projectService.createProject($scope.project)
-                .then(function() {
+                .then(function () {
                     $scope.form = { 'added': true };
                 })
                 .catch(function (error) {
@@ -143,7 +141,7 @@ angular.module('angularTutorialKwakhonaApp')
 
         // updating a project
         $scope.updateProject = function () {
-            
+
             projectService.updateProject($scope.project.pk, $scope.project)
                 .then(function () {
                     $scope.form = { 'edited': true };
