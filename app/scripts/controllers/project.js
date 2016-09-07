@@ -46,7 +46,7 @@ angular.module('angularTutorialKwakhonaApp')
 
         };
 
-        $scope.changeMonth = function (month) {
+        $scope.changeMonth = function(month) {
             switch (month) {
                 case "Jan":
                     month = "01";
@@ -87,6 +87,12 @@ angular.module('angularTutorialKwakhonaApp')
             }
             return month;
         };
+        $scope.isDefined = function(value){
+            if(angular.isDefined(value)){
+                return true;
+            }
+            return false;
+        };
 
         // creating a project
         $scope.addProject = function () {
@@ -116,18 +122,18 @@ angular.module('angularTutorialKwakhonaApp')
                     $scope.form = { 'added': true };
                 })
                 .catch(function (error) {
-                    if (angular.isDefined(error.data)) {
+                    if ($scope.isDefined(error.data)) {
                         var err = "ERRORS \n";
-                        if (angular.isDefined(error.data.title)) {
+                        if ($scope.isDefined(error.data.title)) {
                             err += "Title: " + error.data.title + "\n";
                         }
-                        if (angular.isDefined(error.data.description)) {
+                        if ($scope.isDefined(error.data.description)) {
                             err += "Description: " + error.data.description + "\n";
                         }
-                        if (angular.isDefined(error.data.start_date)) {
+                        if ($scope.isDefined(error.data.start_date)) {
                             err += "Start Date: " + error.data.start_date + "\n";
                         }
-                        if (angular.isDefined(error.data.end_date)) {
+                        if ($scope.isDefined(error.data.end_date)) {
                             err += "End Date: " + error.data.end_date + "\n";
                         }
                         $window.alert(err);
