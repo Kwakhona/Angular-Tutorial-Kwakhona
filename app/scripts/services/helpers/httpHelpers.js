@@ -15,6 +15,7 @@ angular.module('angularTutorialKwakhonaApp')
             'Authorization': UserAuthentication.getToken()
         }
 
+        // get method
         httpHelper.get = function (url, data) {
             if (!angular.isUndefined(data.projectId)) {
                 var id = data.projectId;
@@ -25,8 +26,35 @@ angular.module('angularTutorialKwakhonaApp')
                 method: 'GET',
                 url: url,
                 headers: headers
-            })
+            });
         }
+        // put method
+        httpHelper.update = function(url, data) {
+            var projectId = data.projectId;
+            var projectObject = data.projectObject;
+            url +=  projectId+'/';
+
+            return $http({
+                method: 'PUT',
+                url: url,
+                data: projectObject,
+                headers: headers
+            });
+        }
+        // delete method
+        httpHelper.remove = function(url, data) {
+            if (!angular.isUndefined(data.projectId)) {
+                var id = data.projectId;
+                url += id + '/';
+            }
+
+            return $http({
+                method: 'DELETE',
+                url: url,
+                headers: headers
+            });
+        }
+        
 
         return httpHelper;
     });

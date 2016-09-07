@@ -8,13 +8,13 @@
  * Controller of the angularTutorialKwakhonaApp
  */
 angular.module('angularTutorialKwakhonaApp')
-    .controller('UserCtrl', function($scope, projectService) {
+    .controller('UserCtrl', function($scope, $window, projectService) {
 
         projectService.getProjects()
             .then(function(response){
                 $scope.projects = response.data;
             })
-            .catch(function(){
-
+            .catch(function(error){
+                $window.alert("Error: "+ error);
             });
     });

@@ -17,5 +17,18 @@ angular.module('angularTutorialKwakhonaApp')
             return httpHelpers.get(url, data);
         };
 
+        projectApi.updateProject = function(project){
+            data.projectId = project.pk;
+            data.projectObject = project;
+
+            return httpHelpers.update(url, data);
+        };
+
+        projectApi.deleteProject = function(pk){
+            data.projectId = pk;
+
+            return httpHelpers.update(url, data);
+        };
+
         return projectApi;
     });
