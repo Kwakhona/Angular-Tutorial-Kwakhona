@@ -12,7 +12,7 @@ angular.module('angularTutorialKwakhonaApp')
         var projectApi = this;
         var data = {};
         var url = PROJECT_SERVICE_BASE_URI + 'projects/';
-        
+
         // get all Projects
         projectApi.getProjects = function(){
             return httpHelpers.get(url, data);
@@ -24,9 +24,11 @@ angular.module('angularTutorialKwakhonaApp')
             return httpHelpers.update(url, data);
         };
         // update a Project
-        projectApi.updateProject = function(project){
-            data.projectId = project.pk;
-            data.projectObject = project;
+        projectApi.updateProject = function(pk, project){
+            var data = {
+                'projectId' : pk,
+                'projectObject' : project
+            };
 
             return httpHelpers.update(url, data);
         };

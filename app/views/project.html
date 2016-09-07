@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-12 col-xs-12">
+    <div class="col-md-12 col-xs-12" ng-show="projects.length > 0">
         <div class="panel panel-default">
             <div class="panel-heading">Projects</div>
             <div class="panel-body">
@@ -26,18 +26,74 @@
                             <td>{{project.is_billable}}</td>
                             <td>{{project.is_active}}</td>
                             <td>
-                                <button class="btn btn-warning btn-xs">
+                                <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" ng-click="Update(project)" data-target="#editProject">
                                     <span class="glyphicon glyphicon-edit"></span>
                                 </button>
-                                <button class="btn btn-danger btn-xs">
+                                <button type="button" class="btn btn-danger btn-xs">
                                     <span class="glyphicon glyphicon-minus"></span>
                                 </button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+
+                <!-- Edit Project Modal -->
+                <div class="modal fade" id="editProject" tabindex="-1" role="dialog" aria-labelledby="editProjectLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="editProjectLabel">Edit a Project</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div ng-if="_edited.success === true" class="alert alert-success">
+                                    You have sucessfully edit a project
+                                </div>
+                                <form>
+                                    <div class="form-group">
+                                        <label for="pk">PK</label>
+                                        <input type="text" class="form-control" id="pk" ng-model="project.pk" disabled/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="title">Title</label>
+                                        <input type="text" class="form-control" placeholder="Title" id="title" ng-model="project.title" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="description">Description</label>
+                                        <input type="text" class="form-control" placeholder="Description" ng-model="project.description" id="description" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="start">Start Date</label>
+                                        <input type="text" class="form-control" placeholder="Start Date" ng-model="project.start_date" id="start" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="end">End Date</label>
+                                        <input type="text" class="form-control" placeholder="End Date" ng-model="project.end_date" id="end" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>is billable?</label>
+                                        <input type="checkbox" class="form-control" ng-model="project.is_billable" id="is_billable" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>is active?</label>
+                                        <input type="checkbox" class="form-control" ng-model="project.is_active" id="is_active" />
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" ng-click="updateProject()">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
-
+    <div class="col-md-12 col-xs-12" ng-show="projects.length === 0">
+        <div class="col-md-12">
+            <h4>No Products found</h4>
+        </div>
+    </div>
 </div>

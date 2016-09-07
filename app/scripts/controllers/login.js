@@ -10,15 +10,15 @@
 
 angular.module('angularTutorialKwakhonaApp')
 
-    .controller('LoginCtrl', function($scope, $location, UserAuthentication) {
+    .controller('LoginCtrl', function($scope, $location, $window, UserAuthentication) {
         
         $scope.Login = function () {
             UserAuthentication.login($scope.username, $scope.password)
                 .then(function(){
                    $location.path('/projects');
                 })
-                .catch(function(){
-
+                .catch(function(error){
+                    $window.alert("error: "+ error);
                 });
         };
     });
