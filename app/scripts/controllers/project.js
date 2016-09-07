@@ -17,26 +17,12 @@ angular.module('angularTutorialKwakhonaApp')
             .catch(function(error){
                 $window.alert("Error: "+ error);
             });
-        
-        
-        // creating a project
-        $scope.addProject = function(){
-            $scope.project.pk = "";
-            projectService.createProject($scope.project)
-                .then(function(){
-                    $scope._edited = { 'success': true };
-                })
-                .catch(function(error){
-                    $window.alert("Error: "+ error);
-                });
-        };
-        
-        // updating a project
+
+        // updating add/edit form
         $scope.UpdateForm = function(project){
             $scope.form = { 'edited': false, 'added': false };
 
             if(project !== null){
-                console.log("Yes");
                 $scope.project = {
                     'pk':project.pk,
                     'title': project.title,
@@ -47,7 +33,6 @@ angular.module('angularTutorialKwakhonaApp')
                     'is_active': project.is_active
                 };
             } else {
-                console.log('No');
                 $scope.project = {
                     'pk': '',
                     'title': '',
@@ -57,10 +42,23 @@ angular.module('angularTutorialKwakhonaApp')
                     'is_billable': '',
                     'is_active': ''
                 };
-
             }
 
         };
+        
+        // creating a project
+        $scope.addProject = function(){
+            $scope.project.pk = "";
+            projectService.createProject($scope.project)
+                .then(function(){
+                    $scope.form = { 'added': true };
+                })
+                .catch(function(error){
+                    $window.alert("Error: "+ JSON.stringify(error));
+                });
+        };
+        
+        // updating a project
         $scope.updateProject = function(){
             projectService.updateProject($scope.project.pk, $scope.project)
                 .then(function(){
