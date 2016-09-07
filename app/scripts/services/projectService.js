@@ -8,20 +8,20 @@
  * Service of the angularTutorialKwakhonaApp
  */
 angular.module('angularTutorialKwakhonaApp')
-    .service('projectService', function ($q, $http, PROJECT_SERVICE_BASE_URI, httpHelpers) {
+    .service('projectService', function($q, $http, PROJECT_SERVICE_BASE_URI, httpHelpers) {
         var projectApi = this;
         var data = {};
         var url = PROJECT_SERVICE_BASE_URI + 'projects/';
 
         // get all Projects
-        projectApi.getProjects = function () {
+        projectApi.getProjects = function() {
             if (angular.isDefined(data.projectId)) {
                 data.projectId = '';
             }
             return httpHelpers.get(url, data);
         };
         // create a new Project
-        projectApi.createProject = function (project) {
+        projectApi.createProject = function(project) {
             project.start_date = projectApi.dateToString(project.start_date);
             project.end_date = projectApi.dateToString(project.end_date);
 
@@ -31,7 +31,7 @@ angular.module('angularTutorialKwakhonaApp')
             return httpHelpers.create(url, data);
         };
         // update a Project
-        projectApi.updateProject = function (pk, project) {
+        projectApi.updateProject = function(pk, project) {
             var data = {
                 'projectId': pk,
                 'projectObject': project
@@ -40,13 +40,13 @@ angular.module('angularTutorialKwakhonaApp')
             return httpHelpers.update(url, data);
         };
         // delete a project
-        projectApi.deleteProject = function (pk) {
+        projectApi.deleteProject = function(pk) {
             data.projectId = pk;
 
             return httpHelpers.remove(url, data);
         };
         // convert a lond date to string
-        projectApi.dateToString = function (date) {
+        projectApi.dateToString = function(date) {
             var day, month, year = '';
             // Mon Sep 12 2016 00:00:00 GMT+0200 (South Africa Standard Time)
             if (angular.isDefined(date)) {
