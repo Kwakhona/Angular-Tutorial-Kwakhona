@@ -17,7 +17,7 @@ angular.module('angularTutorialKwakhonaApp')
 
         // get method
         httpHelper.get = function (url, data) {
-            if (!angular.isUndefined(data.projectId)) {
+            if (httpHelper.isUndefined(data)) {
                 var id = data.projectId;
                 url += id + '/';
             }
@@ -51,7 +51,7 @@ angular.module('angularTutorialKwakhonaApp')
         }
         // delete method
         httpHelper.remove = function(url, data) {
-            if (!angular.isUndefined(data.projectId)) {
+            if (httpHelper.isUndefined(data)) {
                 var id = data.projectId;
                 url += id + '/';
             }
@@ -62,6 +62,14 @@ angular.module('angularTutorialKwakhonaApp')
                 headers: headers
             });
         }
+
+        // determine whether projectId is undefined
+        httpHelper.isUndefined = function(data){
+            if(!angular.isUndefined(data.projectId)){
+                return true;
+            }
+            return false;
+        };
         
 
         return httpHelper;
