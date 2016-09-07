@@ -98,7 +98,7 @@ angular.module('angularTutorialKwakhonaApp')
         $scope.addProject = function () {
             var day, month, year;
 
-            if (angular.isDefined($scope.project.start_date)) {
+            if ($scope.isDefined($scope.project.start_date)) {
                 day = $scope.project.start_date.toString().substr(8, 2);
                 month = $scope.project.start_date.toString().substr(4, 3);
                 year = $scope.project.start_date.toString().substr(11, 4);
@@ -107,7 +107,7 @@ angular.module('angularTutorialKwakhonaApp')
                 $scope.project.start_date = year + "-" + month + "-" + day;
             }
 
-            if (angular.isDefined($scope.project.end_date)) {
+            if ($scope.isDefined($scope.project.end_date)) {
                 day = $scope.project.end_date.toString().substr(8, 2);
                 month = $scope.project.end_date.toString().substr(4, 3);
                 year = $scope.project.end_date.toString().substr(11, 4);
