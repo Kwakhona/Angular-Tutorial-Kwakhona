@@ -1,7 +1,7 @@
 // Karma configuration
 // Generated on 2016-09-05
 
-module.exports = function(config) {
+module.exports = function (config) {
     'use strict';
 
     config.set({
@@ -37,9 +37,8 @@ module.exports = function(config) {
             'bower_components/angular-touch/angular-touch.js',
             'bower_components/angular-mocks/angular-mocks.js',
             // endbower
-            "app/scripts/**/*.js",
-            "test/mock/**/*.js",
-            "test/spec/**/*.js"
+            'app/scripts/**/*.js',
+            'test/spec/**/*.js'
         ],
 
         // list of files / patterns to exclude
@@ -84,8 +83,8 @@ module.exports = function(config) {
 
         coverageReporter: {
             reporters: [
-                {type: 'lcov', dir: 'coverage/'},
-                {type: 'cobertura', dir: 'coverage/', file: 'cobertura.xml'}
+                { type: 'lcov', dir: 'coverage/' },
+                { type: 'cobertura', dir: 'coverage/', file: 'cobertura.xml' }
             ]
         },
 
