@@ -29,11 +29,10 @@ describe('Controller: LoginCtrl', function () {
 
     it('should fire the Login() function', function(){
 
-        $scope.Login();
     });
     it('should redirect after Login() is called', function(){
-        $scope.Login();
         
+
     });
 
 });
