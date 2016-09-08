@@ -1,7 +1,7 @@
 // Karma configuration
 // Generated on 2016-09-05
 
-module.exports = function(config) {
+module.exports = function (config) {
   'use strict';
 
   config.set({
@@ -19,7 +19,9 @@ module.exports = function(config) {
     ],
 
     preprocessors: {
-        'app/scripts/**/*.js': 'coverage'
+      // 'app/scripts/**/*.js': 'coverage',
+      // // do not include libs files
+      'app/scripts/**/*.js': 'coverage'
     },
 
     // list of files / patterns to load in the browser
@@ -62,12 +64,12 @@ module.exports = function(config) {
 
     // Which plugins to enable
     plugins: [
-            "karma-coverage",
-            "karma-phantomjs-launcher",
-            'karma-chrome-launcher',
-            //'karma-firefox-launcher',
-            "karma-jasmine"
-        ],
+      "karma-coverage",
+      "karma-phantomjs-launcher",
+      'karma-chrome-launcher',
+      //'karma-firefox-launcher',
+      "karma-jasmine"
+    ],
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
@@ -82,10 +84,10 @@ module.exports = function(config) {
     reporters: ['progress', 'coverage'],
 
     coverageReporter: {
-        reporters: [
-            {type: 'lcov', dir: 'coverage/'},
-            {type: 'cobertura', dir: 'coverage/', file: 'cobertura.xml'}
-        ]
+      reporters: [
+        { type: 'lcov', dir: 'coverage/' },
+        { type: 'cobertura', dir: 'coverage/', file: 'cobertura.xml' }
+      ]
     },
 
     // Uncomment the following lines if you are using grunt's server to run the tests
