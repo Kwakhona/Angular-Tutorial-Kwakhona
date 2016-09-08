@@ -13,7 +13,7 @@ angular.module('angularTutorialKwakhonaApp')
         var headers = {
             'Content-Type': 'application/json',
             'Authorization': UserAuthentication.getToken()
-        }
+        };
 
         // get method
         httpHelper.get = function (url, data) {
@@ -24,7 +24,8 @@ angular.module('angularTutorialKwakhonaApp')
                 url: url,
                 headers: headers
             });
-        }// create method
+        };
+        // create method
         httpHelper.create = function (url, data) {
             return $http({
                 method: 'POST',
@@ -32,7 +33,7 @@ angular.module('angularTutorialKwakhonaApp')
                 data: data,
                 headers: headers
             });
-        }
+        };
         // put method
         httpHelper.update = function(url, data) {
             var projectId = data.projectId;
@@ -45,7 +46,7 @@ angular.module('angularTutorialKwakhonaApp')
                 data: projectObject,
                 headers: headers
             });
-        }
+        };
         // delete method
         httpHelper.remove = function(url, data) {
             url = httpHelper.extractID(url, data);
@@ -55,7 +56,7 @@ angular.module('angularTutorialKwakhonaApp')
                 url: url,
                 headers: headers
             });
-        }
+        };
 
         // determine whether projectId is undefined and extract projectID if it is
         httpHelper.extractID = function(url, data){
