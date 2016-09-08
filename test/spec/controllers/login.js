@@ -27,6 +27,7 @@ describe('Controller: LoginCtrl', function () {
         $scope.Login = authService.login($scope.username, $scope.password)
                         .then(function(response){
                             expect(response.token).toBe('71456dbd15de0c0b6d2b4b44e5a92ad94c6def97');
+                            location.path('/projects');
                         });
 
     });
