@@ -33,13 +33,28 @@ describe('Service: UserAuthentication', function () {
         httpBackend.flush();
     });
 
-    it('should get error message on authentication failure', function () {
+    it('should get error message on authentication failure - wrong password', function () {
         httpBackend.expect('POST', url)
             .respond(200, {"non_field_errors": ["Unable to login with provided credentials."] });
 
         authService.login(scope.username, "adm")
             .then(function (data) {
-                expect(!data.non_field_errors).toBe('Unable to login with provided credentials.');
+                expect(data.non_field_errors).toBe('Unable to login with provided credentials.');
+            });
+
+        httpBackend.flush();
+    });
+    it('should get error message on authentication failure - username & password required', function () {
+        httpBackend.expect('POST', url)
+            .respond(200, {"username": ["This field is required."], "password": ["This field is required."]});
+
+        authService.login('', '')
+            .then(function (data) {
+                expect(!data.username).toBe(true);
+                expect(!data.password).toBe(true);
+                
+                expect(data.username).toBe("This field is required.");
+                expect(data.password).toBe("This field is required.");
             });
 
         httpBackend.flush();
