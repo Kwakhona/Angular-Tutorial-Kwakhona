@@ -28,27 +28,9 @@ angular.module('angularTutorialKwakhonaApp')
 
         // error handling method
        var handleError = function(error) {
-            var err;
-
-            if(isDefined(error.data.title)){
-                 err += "Title: " + error.data.title + "\n";
+            if(isDefined(error)){
+                $window.alert(JSON.stringify(error));
             }
-            if(isDefined(error.data.description)){
-                 err += "Description: " + error.data.description + "\n";
-            }
-            if(isDefined(error.data.start_date)){
-                 err += "Start Date: " + error.data.start_date + "\n";
-            }
-            if(isDefined(error.data.end_date)){
-                 err += "End Date: " + error.data.end_date + "\n";
-            }
-
-            if(isDefined(err)){
-                $window.alert(err);
-            } else {
-                $window.alert(error);
-            }
-            
         };
 
 
