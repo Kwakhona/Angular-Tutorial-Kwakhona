@@ -21,19 +21,13 @@ angular.module('angularTutorialKwakhonaApp')
         };
 
         // error handling method
-        var HandleError = function (error) {
+        $scope.HandleError = function(error) {
             var err = "ERRORS \n";
 
-            if ($scope.isDefined(error.data.title)) {
+            if ($scope.isDefined(error.data.title) || $scope.isDefined(error.data.description) || $scope.isDefined(error.data.start_date) || $scope.isDefined(error.data.end_date)) {
                 err += "Title: " + error.data.title + "\n";
-            }
-            if ($scope.isDefined(error.data.description)) {
                 err += "Description: " + error.data.description + "\n";
-            }
-            if ($scope.isDefined(error.data.start_date)) {
                 err += "Start Date: " + error.data.start_date + "\n";
-            }
-            if ($scope.isDefined(error.data.end_date)) {
                 err += "End Date: " + error.data.end_date + "\n";
             }
 
@@ -83,7 +77,7 @@ angular.module('angularTutorialKwakhonaApp')
                     init();
                 })
                 .catch(function (error) {
-                    HandleError(error);
+                    $scope.HandleError(error);
                 });
         };
 
@@ -96,7 +90,7 @@ angular.module('angularTutorialKwakhonaApp')
                     init();
                 })
                 .catch(function (error) {
-                    HandleError(error);
+                    $scope.HandleError(error);
                 });
         };
 
@@ -108,7 +102,7 @@ angular.module('angularTutorialKwakhonaApp')
                         init();
                     })
                     .catch(function (error) {
-                        HandleError(error);
+                        $scope.HandleError(error);
                     });
             } else {
                 $window.alert("You have cancelled the deletion off project: " + project.title);

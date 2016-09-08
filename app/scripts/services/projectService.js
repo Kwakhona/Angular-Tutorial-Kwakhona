@@ -8,7 +8,7 @@
  * Service of the angularTutorialKwakhonaApp
  */
 angular.module('angularTutorialKwakhonaApp')
-    .service('projectService', function ($q, $http, PROJECT_SERVICE_BASE_URI, httpHelpers) {
+    .service('projectService', function ($http, PROJECT_SERVICE_BASE_URI, httpHelpers) {
         var projectApi = this;
         var data = {};
         var url = PROJECT_SERVICE_BASE_URI + 'projects/';
@@ -23,7 +23,12 @@ angular.module('angularTutorialKwakhonaApp')
         // create a new Project
         projectApi.createProject = function (project) {
             project.start_date = projectApi.dateToString(project.start_date);
-            project.end_date = projectApi.dateToString(project.end_date);
+            if(angular.isDefined(project.end_date)){
+                project.end_date = projectApi.dateToString(project.end_date);    
+            } else {
+                project.end_date = '';
+            }
+            
 
             data = project;
 
