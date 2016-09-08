@@ -37,7 +37,7 @@ describe('Service: UserAuthentication', function () {
         httpBackend.expect('POST', url)
             .respond(200, {"non_field_errors": ["Unable to login with provided credentials."] });
 
-        authService.login(scope.username, scope.password)
+        authService.login(scope.username, "adm")
             .then(function (data) {
                 expect(!data.non_field_errors).toBe('Unable to login with provided credentials.');
             });
