@@ -19,7 +19,11 @@ angular.module('angularTutorialKwakhonaApp')
         httpHelper.get = function (url, data) {
             url = httpHelper.extractID(url, data);
 
-            return httpHelper.help(url);
+            return $http({
+                method: 'GET',
+                url: url,
+                headers: headers
+            });
         };
         // create method
         httpHelper.create = function (url, data) {
@@ -31,10 +35,10 @@ angular.module('angularTutorialKwakhonaApp')
             });
         };
         // put method
-        httpHelper.update = function (url, data) {
+        httpHelper.update = function(url, data) {
             var projectId = data.projectId;
             var projectObject = data.projectObject;
-            url += projectId + '/';
+            url +=  projectId+'/';
 
             return $http({
                 method: 'PUT',
@@ -44,45 +48,26 @@ angular.module('angularTutorialKwakhonaApp')
             });
         };
         // delete method
-        httpHelper.remove = function (url, data) {
+        httpHelper.remove = function(url, data) {
             url = httpHelper.extractID(url, data);
 
-            return httpHelper.help(url);
+            return $http({
+                method: 'DELETE',
+                url: url,
+                headers: headers
+            });
         };
 
         // determine whether projectId is undefined and extract projectID if it is
-        httpHelper.extractID = function (url, data) {
-            if (angular.isDefined(data.projectId)) {
+        httpHelper.extractID = function(url, data){
+            if(angular.isDefined(data.projectId)){
                 var id = data.projectId;
                 url += id + '/';
                 return url;
             }
             return url;
         };
-
-        httpHelper.help = function (url) {
-            var _url = url.split('/');
-
-            if (angular.isDefined(_url[_url.length - 2])) {
-                var last = _url[_url.length - 2];
-                if (last.match(/[0-9]/i)) {
-                    last = Number(last.toString());
-                }
-                if (angular.isNumber(last)) {
-                    return $http({
-                        method: 'DELETE',
-                        url: url,
-                        headers: headers
-                    });
-                }
-            }
-            return $http({
-                method: 'GET',
-                url: url,
-                headers: headers
-            });
-        };
-
+        
 
         return httpHelper;
     });
