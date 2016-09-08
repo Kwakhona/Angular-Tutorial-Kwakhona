@@ -22,7 +22,7 @@ describe('Service: projectService', function () {
 
         service.getProjects()
             .then(function (data) {
-                expect(data[0]).toBeDefined();
+                expect(data).toBeDefined();
             });
 
         httpBackend.flush();
