@@ -21,8 +21,6 @@ angular
     'AUTH_SERVICE_BASE_URI': 'http://userservice.staging.tangentmicroservices.com/',
     'PROJECT_SERVICE_BASE_URI': 'http://projectservice.staging.tangentmicroservices.com/api/v1/'
   })
-    
-
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
@@ -39,11 +37,6 @@ angular
         templateUrl: 'views/project.html',
         controller: 'ProjectCtrl',
         controllerAs: 'projects'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
       })
       .otherwise({
         redirectTo: '/'

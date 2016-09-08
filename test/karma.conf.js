@@ -1,7 +1,7 @@
 // Karma configuration
-// Generated on 2016-08-16
+// Generated on 2016-03-24
 
-module.exports = function(config) {
+module.exports = function (config) {
   'use strict';
 
   config.set({
@@ -14,8 +14,14 @@ module.exports = function(config) {
     // testing framework to use (jasmine/mocha/qunit/...)
     // as well as any additional frameworks (requirejs/chai/sinon/...)
     frameworks: [
-      'jasmine'
+      "jasmine"
     ],
+
+    preprocessors: {
+      // 'app/scripts/**/*.js': 'coverage',
+      // // do not include libs files
+      'app/scripts/**/*.js': 'coverage'
+    },
 
     // list of files / patterns to load in the browser
     files: [
@@ -32,9 +38,11 @@ module.exports = function(config) {
       'bower_components/angular-touch/angular-touch.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
+      'app/scripts/*.js',
       'app/scripts/**/*.js',
-      'test/mock/**/*.js',
-      'test/spec/**/*.js'
+      'app/scripts/**/**/*.js',
+      'test/spec/**/*.js',
+      'test/mock/**/*.js'
     ],
 
     // list of files / patterns to exclude
@@ -53,39 +61,36 @@ module.exports = function(config) {
     // - PhantomJS
     // - IE (only Windows)
     browsers: [
-      'PhantomJS'
+      "PhantomJS"
     ],
-
-    preprocessors: {
-      'app/scripts/**/*.js': 'coverage'
-    }, 
 
     // Which plugins to enable
     plugins: [
       "karma-coverage",
       "karma-phantomjs-launcher",
       'karma-chrome-launcher',
-      'karma-phantomjs-launcher',
-      'karma-jasmine'
+      //'karma-firefox-launcher',
+      "karma-jasmine"
     ],
 
-    reporters: ['progress', 'coverage'],
-
-    coverageReporter: {
-      reporters: [
-          {type: 'lcov', dir: 'coverage/'},
-          {type: 'cobertura', dir: 'coverage/', file: 'cobertura.xml'}
-      ]
-    },
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
     singleRun: false,
 
     colors: true,
-    
+
     // level of logging
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
     logLevel: config.LOG_INFO,
+
+    reporters: ['progress', 'coverage'],
+
+    coverageReporter: {
+      reporters: [
+        { type: 'lcov', dir: 'coverage/' },
+        { type: 'cobertura', dir: 'coverage/', file: 'cobertura.xml' }
+      ]
+    },
 
     // Uncomment the following lines if you are using grunt's server to run the tests
     // proxies: {
