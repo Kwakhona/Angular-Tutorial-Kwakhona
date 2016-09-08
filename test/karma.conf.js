@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on 2016-08-16
+// Generated on 2016-03-24
 
 module.exports = function(config) {
   'use strict';
@@ -17,6 +17,10 @@ module.exports = function(config) {
       'jasmine'
     ],
 
+    preprocessors: {
+      'app/scripts/**/*.js': 'coverage'
+    },
+
     // list of files / patterns to load in the browser
     files: [
       // bower:js
@@ -33,7 +37,6 @@ module.exports = function(config) {
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',
-      'test/mock/**/*.js',
       'test/spec/**/*.js'
     ],
 
@@ -53,44 +56,39 @@ module.exports = function(config) {
     // - PhantomJS
     // - IE (only Windows)
     browsers: [
-      'PhantomJS'
+      'Chrome'
     ],
-
-    preprocessors: {
-      'app/scripts/**/*.js': 'coverage'
-    }, 
 
     // Which plugins to enable
     plugins: [
-      "karma-coverage",
-      "karma-phantomjs-launcher",
-      'karma-chrome-launcher',
+      'karma-coverage',
       'karma-phantomjs-launcher',
+      'karma-chrome-launcher',
       'karma-jasmine'
     ],
 
-    reporters: ['progress', 'coverage'],
-
-    coverageReporter: {
-      reporters: [
-          {type: 'lcov', dir: 'coverage/'},
-          {type: 'cobertura', dir: 'coverage/', file: 'cobertura.xml'}
-      ]
-    },
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
     singleRun: false,
 
     colors: true,
-    
+
     // level of logging
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
     logLevel: config.LOG_INFO,
 
+    reporters: ['progress', 'coverage'],
+
+    coverageReporter: {
+        reporters: [
+            {type: 'lcov', dir: 'coverage/'},
+            {type: 'cobertura', dir: 'coverage/', file: 'cobertura.xml'}
+        ]
+    },
     // Uncomment the following lines if you are using grunt's server to run the tests
-    // proxies: {
-    //   '/': 'http://localhost:9000/'
-    // },
+    proxies: {
+      '/': 'http://localhost:9000/'
+    },
     // URL root prevent conflicts with the site root
     // urlRoot: '_karma_'
   });
