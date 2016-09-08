@@ -13,14 +13,14 @@ describe('Controller: LoginCtrl', function () {
         httpBackend;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, $rootScope, $location, UserAuthentication, _$httpBackend, _AUTH_SERVICE_BASE_URI_) {
+    beforeEach(inject(function ($controller, $rootScope, $location, UserAuthentication, $httpBackend, _AUTH_SERVICE_BASE_URI_) {
         $scope = $rootScope.$new();
         LoginCtrl = $controller('LoginCtrl', {
             $scope: $scope
         });
 
         _authService = UserAuthentication;
-        httpBackend = _$httpBackend;
+        httpBackend = $httpBackend;
         location = $location;
         uri = _AUTH_SERVICE_BASE_URI_ + 'api-token-auth/';
 
