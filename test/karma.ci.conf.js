@@ -88,7 +88,7 @@ module.exports = function (config) {
         { type: 'lcov', dir: 'coverage/' },
         { type: 'cobertura', dir: 'coverage/', file: 'cobertura.xml' }
       ]
-    },
+    }
 
     // Uncomment the following lines if you are using grunt's server to run the tests
     // proxies: {

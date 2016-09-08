@@ -18,6 +18,8 @@ module.exports = function(config) {
     ],
 
     preprocessors: {
+      // 'app/scripts/**/*.js': 'coverage',
+      // // do not include libs files
       'app/scripts/**/*.js': 'coverage'
     },
 
@@ -56,7 +58,7 @@ module.exports = function(config) {
     // - PhantomJS
     // - IE (only Windows)
     browsers: [
-      'Chrome'
+      'PhantomJS'
     ],
 
     // Which plugins to enable
@@ -84,7 +86,7 @@ module.exports = function(config) {
             {type: 'lcov', dir: 'coverage/'},
             {type: 'cobertura', dir: 'coverage/', file: 'cobertura.xml'}
         ]
-    },
+    }
     // Uncomment the following lines if you are using grunt's server to run the tests
     // proxies: {
     //   '/': 'http://localhost:9000/'
