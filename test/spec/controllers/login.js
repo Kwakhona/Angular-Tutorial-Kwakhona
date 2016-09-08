@@ -6,25 +6,34 @@ describe('Controller: LoginCtrl', function () {
     beforeEach(module('angularTutorialKwakhonaApp'));
 
     var LoginCtrl,
-        rootScope,
-        scope,
-        $controller,
-        projectService,
+        $scope,
+        _authService,
+        uri,
+        location,
         httpBackend;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function (_$controller, _$scope, _$rootScope, _projectService, _$httpBackend) {
-        scope = _$scope;
-        rootScope = _$rootScope;
-        $controller = _$controller;
-        projectService = _projectService;
-        httpBackend = _$httpBackend;
-    }));
-
-    it('should load login()', function ($scope) {
+    beforeEach(inject(function ($controller, $rootScope, $location, UserAuthentication, _$httpBackend, _AUTH_SERVICE_BASE_URI_) {
+        $scope = $rootScope.$new();
         LoginCtrl = $controller('LoginCtrl', {
             $scope: $scope
         });
+
+        _authService = UserAuthentication;
+        httpBackend = _$httpBackend;
+        location = $location;
+        uri = _AUTH_SERVICE_BASE_URI_ + 'api-token-auth/';
+
+        $scope = { username : 'admin', password: 'admin' };
+    }));
+
+    it('should fire the Login() function', function(){
+
         $scope.Login();
     });
+    it('should redirect after Login() is called', function(){
+        $scope.Login();
+        
+    });
+
 });
