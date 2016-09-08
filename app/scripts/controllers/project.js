@@ -19,39 +19,45 @@ angular.module('angularTutorialKwakhonaApp')
                     $window.alert(JSON.stringify(error));
                 });
         };
-
-        // error handling method
-        var HandleError = function (error) {
-            var err = "ERRORS \n";
-
-            if ($scope.isDefined(error.data.title)) {
-                err += "Title: " + error.data.title + "\n";
-            }
-            if ($scope.isDefined(error.data.description)) {
-                err += "Description: " + error.data.description + "\n";
-            }
-            if ($scope.isDefined(error.data.start_date)) {
-                err += "Start Date: " + error.data.start_date + "\n";
-            }
-            if ($scope.isDefined(error.data.end_date)) {
-                err += "End Date: " + error.data.end_date + "\n";
-            }
-
-            $window.alert(err);
-        };
-
-
-        $scope.isDefined = function (value) {
+        var isDefined = function (value) {
             if (angular.isDefined(value)) {
                 return true;
             }
             return false;
         };
+
+        // error handling method
+       var handleError = function(error) {
+            var err;
+
+            if(isDefined(error.data.title)){
+                 err += "Title: " + error.data.title + "\n";
+            }
+            if(isDefined(error.data.description)){
+                 err += "Description: " + error.data.description + "\n";
+            }
+            if(isDefined(error.data.start_date)){
+                 err += "Start Date: " + error.data.start_date + "\n";
+            }
+            if(isDefined(error.data.end_date)){
+                 err += "End Date: " + error.data.end_date + "\n";
+            }
+
+            if(isDefined(err)){
+                $window.alert(err);
+            } else {
+                $window.alert(error);
+            }
+            
+        };
+
+
+        
         // updating add/edit form
         $scope.UpdateForm = function (project) {
             $scope.form = { edited: false, added: false };
 
-            if ($scope.isDefined(project)) {
+            if (isDefined(project)) {
                 $scope.project = {
                     pk: project.pk,
                     title: project.title,
@@ -83,7 +89,7 @@ angular.module('angularTutorialKwakhonaApp')
                     init();
                 })
                 .catch(function (error) {
-                    HandleError(error);
+                    handleError(error);
                 });
         };
 
@@ -96,7 +102,7 @@ angular.module('angularTutorialKwakhonaApp')
                     init();
                 })
                 .catch(function (error) {
-                    HandleError(error);
+                    handleError(error);
                 });
         };
 
@@ -108,7 +114,7 @@ angular.module('angularTutorialKwakhonaApp')
                         init();
                     })
                     .catch(function (error) {
-                        HandleError(error);
+                        handleError(error);
                     });
             } else {
                 $window.alert("You have cancelled the deletion off project: " + project.title);
