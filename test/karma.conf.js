@@ -25,6 +25,7 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
+      '/app/scripts/**/*.js',
       // bower:js
       'bower_components/jquery/dist/jquery.js',
       'bower_components/angular/angular.js',
@@ -38,9 +39,6 @@ module.exports = function (config) {
       'bower_components/angular-touch/angular-touch.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
-      'app/scripts/*.js',
-      'app/scripts/**/*.js',
-      'app/scripts/**/**/*.js',
       'test/spec/**/*.js',
       'test/mock/**/*.js'
     ],
@@ -61,7 +59,7 @@ module.exports = function (config) {
     // - PhantomJS
     // - IE (only Windows)
     browsers: [
-      "PhantomJS"
+      "Chrome"
     ],
 
     // Which plugins to enable
