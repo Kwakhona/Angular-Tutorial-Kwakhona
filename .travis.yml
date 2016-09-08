@@ -6,7 +6,7 @@ env:
   global:
   - CODECLIMATE_REPO_TOKEN=69897b18442c87bd1fc2a5314416c0387e68c063d0e3361158cffcfcf0218165 codeclimate-test-reporter < coverage/**/lcov.info
 before_script:
-  - travis_wait npm install -g bower grunt-cli
-  - travis_wait bower install
+  - npm install -g bower grunt-cli
+  - bower install
 after_script:
   - codeclimate-test-reporter < coverage/**/lcov.info
