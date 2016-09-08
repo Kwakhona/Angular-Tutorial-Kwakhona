@@ -30,7 +30,7 @@ describe('Controller: LoginCtrl', function () {
     it('should login in successfully', function () {
 
         httpBackend.expect('POST', uri)
-            .respond(200, "{token: 71456dbd15de0c0b6d2b4b44e5a92ad94c6def97}");
+            .respond(200, "{token: '71456dbd15de0c0b6d2b4b44e5a92ad94c6def97'}");
 
         _authService.login($scope.username, $scope.password)
             .then(function (data) {
