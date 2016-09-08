@@ -61,7 +61,8 @@ angular.module('angularTutorialKwakhonaApp')
         httpHelper.extractID = function(url, data){
             if(angular.isDefined(data.projectId)){
                 var id = data.projectId;
-                return url += id + '/';
+                url += id + '/';
+                return url;
             }
             return url;
         };
