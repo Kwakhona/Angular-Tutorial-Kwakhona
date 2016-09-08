@@ -11,13 +11,13 @@ describe('Service: UserAuthentication', function () {
         cookie,
         url;
 
-    // Initialize the controller and a mock scope
-    beforeEach(inject(function (UserAuthentication, $httpBackend, $cookie, AUTH_SERVICE_BASE_URI) {
+    // Initialize the service, httpBackend and a mock cookie
+    beforeEach(inject(function (UserAuthentication, $httpBackend, $cookies, AUTH_SERVICE_BASE_URI) {
         url = AUTH_SERVICE_BASE_URI + 'api-token-auth/';
         authService = UserAuthentication;
         httpBackend =$httpBackend;
         scope = {username: 'admin', password: 'admin'};
-        cookie = $cookie;
+        cookie = $cookies;
     }));
 
     it('should get token on successful authentication', function () {
