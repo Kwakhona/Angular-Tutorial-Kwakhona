@@ -1,7 +1,7 @@
 // Karma configuration
 // Generated on 2016-03-24
 
-module.exports = function (config) {
+module.exports = function(config) {
   'use strict';
 
   config.set({
@@ -14,13 +14,11 @@ module.exports = function (config) {
     // testing framework to use (jasmine/mocha/qunit/...)
     // as well as any additional frameworks (requirejs/chai/sinon/...)
     frameworks: [
-      "jasmine"
+      'jasmine'
     ],
 
     preprocessors: {
-      // 'app/scripts/**/*.js': 'coverage',
-      // // do not include libs files
-      'app/scripts/**/*.js': 'coverage'
+      "app/scripts/**/*.js": "coverage"
     },
 
     // list of files / patterns to load in the browser
@@ -28,7 +26,7 @@ module.exports = function (config) {
       // bower:js
       'bower_components/jquery/dist/jquery.js',
       'bower_components/angular/angular.js',
-      'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js',
+      'bower_components/bootstrap/dist/js/bootstrap.js',
       'bower_components/angular-animate/angular-animate.js',
       'bower_components/angular-cookies/angular-cookies.js',
       'bower_components/angular-resource/angular-resource.js',
@@ -36,7 +34,7 @@ module.exports = function (config) {
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/angular-touch/angular-touch.js',
       'bower_components/angular-mocks/angular-mocks.js',
-      // endbower,
+      // endbower
       'app/scripts/**/*.js',
       'test/spec/**/*.js'
     ],
@@ -57,16 +55,15 @@ module.exports = function (config) {
     // - PhantomJS
     // - IE (only Windows)
     browsers: [
-      "Chrome"
+      'PhantomJS'
     ],
 
     // Which plugins to enable
     plugins: [
-      "karma-coverage",
-      "karma-phantomjs-launcher",
+      'karma-coverage',
+      'karma-phantomjs-launcher',
       'karma-chrome-launcher',
-      //'karma-firefox-launcher',
-      "karma-jasmine"
+      'karma-jasmine'
     ],
 
     // Continuous Integration mode
@@ -82,12 +79,11 @@ module.exports = function (config) {
     reporters: ['progress', 'coverage'],
 
     coverageReporter: {
-      reporters: [
-        { type: 'lcov', dir: 'coverage/' },
-        { type: 'cobertura', dir: 'coverage/', file: 'cobertura.xml' }
-      ]
+        reporters: [
+            {type: 'lcov', dir: 'coverage/'},
+            {type: 'cobertura', dir: 'coverage/', file: 'cobertura.xml'}
+        ]
     },
-
     // Uncomment the following lines if you are using grunt's server to run the tests
     // proxies: {
     //   '/': 'http://localhost:9000/'
