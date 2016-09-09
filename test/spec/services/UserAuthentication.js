@@ -15,8 +15,8 @@ describe('Service: UserAuthentication', function () {
     beforeEach(inject(function (UserAuthentication, $httpBackend, $cookies, AUTH_SERVICE_BASE_URI) {
         url = AUTH_SERVICE_BASE_URI + 'api-token-auth/';
         authService = UserAuthentication;
-        httpBackend =$httpBackend;
-        scope = {username: 'admin', password: 'admin'};
+        httpBackend = $httpBackend;
+        scope = { username: 'admin', password: 'admin' };
         cookie = $cookies;
     }));
 
@@ -34,7 +34,7 @@ describe('Service: UserAuthentication', function () {
 
     it('should get error message on authentication failure - wrong password', function () {
         httpBackend.expect('POST', url)
-            .respond(200, {"non_field_errors": ["Unable to login with provided credentials."] });
+            .respond(200, { "non_field_errors": ["Unable to login with provided credentials."] });
 
         authService.login(scope.username, "adm")
             .then(function (data) {
@@ -45,7 +45,7 @@ describe('Service: UserAuthentication', function () {
     });
     it('should get error message on authentication failure - username & password required', function () {
         httpBackend.expect('POST', url)
-            .respond(200, {"username": ["This field is required."], "password": ["This field is required."]});
+            .respond(200, { "username": ["This field is required."], "password": ["This field is required."] });
 
         authService.login('', '')
             .then(function (data) {
@@ -54,5 +54,22 @@ describe('Service: UserAuthentication', function () {
             });
 
         httpBackend.flush();
+    });
+
+    it('should check is is logged in by looking for token: isLoggedIn()', function () {
+        var token = authService.getToken();
+
+        expect(token).toBe('71456dbd15de0c0b6d2b4b44e5a92ad94c6def97');
+    });
+    it('should store(as a cookie) a token successfully', function () {
+        var token = '71456dbd15de0c0b6d2b4b44e5a92ad94c6def97';
+        cookie.put('token', token);
+
+        expect(cookie.get('token')).toBe('71456dbd15de0c0b6d2b4b44e5a92ad94c6def97');
+    });
+    it('should remove a token successfully', function () {
+        cookie.remove('token');
+
+        expect(cookie.get('token')).toBeUndefined();
     });
 });
