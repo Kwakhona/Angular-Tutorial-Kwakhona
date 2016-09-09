@@ -20,6 +20,8 @@ angular.module('angularTutorialKwakhonaApp')
                 .catch(function(error){
                     if(angular.isDefined(error.non_field_errors)){
                         $window.alert("Error: "+ error.non_field_errors);
+                    } else if(angular.isDefined(error.username) || angular.isDefined(error.password)){
+                        $window.alert("Username/Password is required. Please try again");
                     }
                 });
         };
