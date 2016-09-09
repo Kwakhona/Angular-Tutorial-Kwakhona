@@ -10,7 +10,7 @@
 angular.module('angularTutorialKwakhonaApp')
     .controller('ProjectCtrl', function ($scope, $window, $route, projectService) {
         // get all projects
-        var init = function () {
+        $scope.init = function () {
             projectService.getProjects()
                 .then(function (response) {
                     $scope.projects = response.data;
@@ -103,5 +103,5 @@ angular.module('angularTutorialKwakhonaApp')
             }
         };
 
-        init();
+        $scope.init();
     });
