@@ -18,6 +18,7 @@ angular.module('angularTutorialKwakhonaApp')
                 .catch(function (error) {
                     $window.alert(JSON.stringify(error));
                 });
+            return $scope.projects;
         };
         var isDefined = function (value) {
             if (angular.isDefined(value)) {
@@ -27,14 +28,14 @@ angular.module('angularTutorialKwakhonaApp')
         };
 
         // error handling method
-       var handleError = function(error) {
-            if(isDefined(error)){
+        var handleError = function (error) {
+            if (isDefined(error)) {
                 $window.alert(JSON.stringify(error));
             }
         };
 
 
-        
+
         // updating add/edit form
         $scope.UpdateForm = function (project) {
             $scope.form = { edited: false, added: false };
