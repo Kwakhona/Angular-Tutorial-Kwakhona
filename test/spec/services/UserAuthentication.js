@@ -56,7 +56,7 @@ describe('Service: UserAuthentication', function () {
         httpBackend.flush();
     });
 
-    it('should check is is logged in by looking for token: isLoggedIn()', function () {
+    it('should check if is logged in by looking for token: isLoggedIn()', function () {
         var token = authService.getToken();
 
         expect(token).toBe('71456dbd15de0c0b6d2b4b44e5a92ad94c6def97');

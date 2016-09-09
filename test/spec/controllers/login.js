@@ -46,6 +46,7 @@ describe('Controller: LoginCtrl', function () {
 
         expect(cookie.get('token')).toBe('71456dbd15de0c0b6d2b4b44e5a92ad94c6def97');
     });
+    
     it('should return an error on login failure -- wrong username/password', function () {
         expect(LoginCtrl).toBeDefined();
 
@@ -80,7 +81,8 @@ describe('Controller: LoginCtrl', function () {
 
         httpBackend.flush();
 
-        expect(error).toEqual({"username": ["This field is required."], "password": ["This field is required."]});
+        expect(error.username[0]).toBe("This field is required.");
+        expect(error.password[0]).toBe("This field is required.");
     });
 
 });
