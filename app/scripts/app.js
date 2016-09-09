@@ -1,13 +1,5 @@
 'use strict';
 
-/**
- * @ngdoc overview
- * @name angularTutorialKwakhonaApp
- * @description
- * # angularTutorialKwakhonaApp
- *
- * Main module of the application.
- */
 angular
   .module('angularTutorialKwakhonaApp', [
     'ngAnimate',

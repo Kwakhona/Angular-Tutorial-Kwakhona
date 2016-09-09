@@ -33,9 +33,6 @@ angular.module('angularTutorialKwakhonaApp')
                 $window.alert(JSON.stringify(error));
             }
         };
-
-
-
         // updating add/edit form
         $scope.UpdateForm = function (project) {
             $scope.form = { edited: false, added: false };
@@ -63,13 +60,14 @@ angular.module('angularTutorialKwakhonaApp')
             }
 
         };
+
         // creating a project
         $scope.addProject = function () {
 
             projectService.createProject($scope.project)
                 .then(function () {
                     $scope.form = { 'added': true };
-                    init();
+                    $scope.init();
                 })
                 .catch(function (error) {
                     handleError(error);
@@ -82,7 +80,7 @@ angular.module('angularTutorialKwakhonaApp')
             projectService.updateProject($scope.project.pk, $scope.project)
                 .then(function () {
                     $scope.form = { 'edited': true };
-                    init();
+                    $scope.init();
                 })
                 .catch(function (error) {
                     handleError(error);
@@ -94,7 +92,7 @@ angular.module('angularTutorialKwakhonaApp')
             if ($window.confirm("Are you sure you want to delete project: " + project.title) === true) {
                 projectService.deleteProject(project.pk)
                     .then(function () {
-                        init();
+                        $scope.init();
                     })
                     .catch(function (error) {
                         handleError(error);
