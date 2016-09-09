@@ -38,7 +38,7 @@ describe('Service: UserAuthentication', function () {
 
         authService.login(scope.username, "adm")
             .then(function (data) {
-                expect(data.non_field_errors).toBe('[Unable to login with provided credentials.]');
+                expect(data.non_field_errors[0]).toBe('Unable to login with provided credentials.');
             });
 
         httpBackend.flush();
@@ -49,8 +49,8 @@ describe('Service: UserAuthentication', function () {
 
         authService.login('', '')
             .then(function (data) {
-                expect(data.username).toBe("[This field is required.]");
-                expect(data.password).toBe("[This field is required.]");
+                expect(data.username[0]).toBe("This field is required.");
+                expect(data.password[0]).toBe("This field is required.");
             });
 
         httpBackend.flush();
