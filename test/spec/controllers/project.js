@@ -22,7 +22,6 @@ describe('Controller: ProjectCtrl', function () {
         ProjectCtrl = $controller('ProjectCtrl', {
             $scope: $scope
         });
-
     }));
 
     it('should initialize the Project controller', function () {
@@ -43,11 +42,53 @@ describe('Controller: ProjectCtrl', function () {
                 { "pk": 141, "title": "Test Title - Ernest", "description": "This is a test description - update", "start_date": "2016-10-25", "end_date": "2016-11-11", "is_billable": true, "is_active": true, "task_set": [], "resource_set": [] },
                 { "pk": 142, "title": "Kwakhona Mahamba", "description": "Kwakhona's Test Project", "start_date": "2016-09-09", "end_date": "2016-09-28", "is_billable": true, "is_active": true, "task_set": [], "resource_set": [] }
             ]);
-        
+
         service.getProjects()
-            .then(function(data){
-                expect(data[0]).toBe({ "pk": 35, "title": "Justice Unit Tester", "description": "To run unit tests on the project2", "start_date": "2016-08-22", "end_date": "2017-01-27", "is_billable": false, "is_active": false, "task_set": [], "resource_set": [] });
+            .then(function (response) {
+                expect(response.data[0]).toBe({ "pk": 35, "title": "Justice Unit Tester", "description": "To run unit tests on the project2", "start_date": "2016-08-22", "end_date": "2017-01-27", "is_billable": false, "is_active": false, "task_set": [], "resource_set": [] });
             });
+    });
+
+    it('should add project successfully', function () {
+
+        httpBackend.expect('POST', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/")
+            .respond(201,
+            {
+                pk: 143,
+                title: "Kwakhona Richard Mahamba",
+                description: "Kwakhona's 3rd Test Project",
+                start_date: "2016-09-19",
+                end_date: "2016-09-28",
+                is_billable: false,
+                is_active: true,
+                task_set: [],
+                resource_set: []
+            });
+
+        var project = {
+            title: "Kwakhona Richard Mahamba",
+            description: "Kwakhona's 3rd Test Project",
+            start_date: "2016-09-19",
+            end_date: "2016-09-28",
+            is_billable: false,
+            is_active: true
+        };
+
+        service.createProject(project)
+            .then(function (response) {
+                expect(response.data).toBe({
+                    pk: 143,
+                    title: "Kwakhona Richard Mahamba",
+                    description: "Kwakhona's 3rd Test Project",
+                    start_date: "2016-09-19",
+                    end_date: "2016-09-28",
+                    is_billable: false,
+                    is_active: true,
+                    task_set: [],
+                    resource_set: []
+                });
+            });
+
     });
 
     it('should update project details(title, description, start_date & is_billable) successfully', function () {
@@ -69,7 +110,7 @@ describe('Controller: ProjectCtrl', function () {
         var project = {
             pk: 142,
             title: "Kwakhona Richard Mahamba",
-            description: "Kwakhona's 2nd Test Project",
+            description: "Kwakhona's 3rd Test Project",
             start_date: "2016-09-19",
             end_date: "2016-09-28",
             is_billable: false,
@@ -79,8 +120,8 @@ describe('Controller: ProjectCtrl', function () {
         };
 
         service.updateProject(project.pk, project)
-            .then(function (data) {
-                expect(data).toBe({
+            .then(function (response) {
+                expect(response.data).toBe({
                     pk: 142,
                     title: "Kwakhona Richard Mahamba",
                     description: "Kwakhona's 3rd Test Project",
@@ -95,4 +136,83 @@ describe('Controller: ProjectCtrl', function () {
 
     });
 
+    it('should return a error message on project update failure -- Require fields(title, description & start_date)', function () {
+
+        httpBackend.expect('PUT', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/142/")
+            .respond(400,
+            {
+                "title": ["This field may not be blank."],
+                "start_date": ["This field is required."],
+                "description": ["This field may not be blank."]
+            });
+
+        var project = {
+            pk: 142,
+            title: "",
+            description: "",
+            is_billable: false,
+            is_active: true
+        };
+
+        service.updateProject(project.pk, project)
+            .then(function (response) {
+                expect(response.data).toBe({
+                    "title": ["This field may not be blank."],
+                    "start_date": ["This field is required."],
+                    "description": ["This field may not be blank."]
+                });
+            });
+
+    });
+
+    it('should return a error message on project update failure -- Incorrect Date format(start_date & end_date)', function () {
+
+        httpBackend.expect('PUT', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/142/")
+            .respond(400,
+            {
+                "start_date": ["Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]]."],
+                "end_date": ["Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]]."]
+            });
+
+        var project = {
+            pk: 142,
+            title: "Kwakhona is here",
+            description: "Testing is supreme tool",
+            start_date: "",
+            end_date: "02-02-1990",
+            is_billable: false,
+            is_active: true
+        };
+
+        service.updateProject(project.pk, project)
+            .then(function (response) {
+                expect(response.data).toBe({
+                    "start_date": ["Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]]."],
+                    "end_date": ["Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]]."]
+                });
+            });
+
+    });
+
+    it('should delete a project successfully', function () {
+
+        httpBackend.expect('DELETE', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/142/")
+            .respond(204);
+
+        var project = {
+            pk: 142,
+            title: "Kwakhona Richard Mahamba",
+            description: "Kwakhona's 2nd Test Project",
+            start_date: "2016-09-19",
+            end_date: "2016-09-28",
+            is_billable: false,
+            is_active: true
+        };
+
+        service.deleteProject(project)
+            .then(function (response) {
+                expect(response.status).toBe(204);
+            });
+
+    });
 });
