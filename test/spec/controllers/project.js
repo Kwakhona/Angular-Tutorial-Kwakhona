@@ -12,9 +12,9 @@ describe('Controller: ProjectCtrl', function () {
         url;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, $rootScope, projecService, $httpBackend, PROJECT_SERVICE_BASE_URI) {
+    beforeEach(inject(function ($controller, $rootScope, projectService, $httpBackend, PROJECT_SERVICE_BASE_URI) {
         $scope = $rootScope.$new();
-        service = projecService;
+        service = projectService;
         httpBackend = $httpBackend;
         url = PROJECT_SERVICE_BASE_URI + 'projects/';
 
