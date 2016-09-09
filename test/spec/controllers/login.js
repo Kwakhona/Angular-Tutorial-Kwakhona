@@ -46,5 +46,41 @@ describe('Controller: LoginCtrl', function () {
 
         expect(cookie.get('token')).toBe('71456dbd15de0c0b6d2b4b44e5a92ad94c6def97');
     });
+    it('should return an error on login failure -- wrong username/password', function () {
+        expect(LoginCtrl).toBeDefined();
+
+        var error;
+        httpBackend.expectPOST('http://userservice.staging.tangentmicroservices.com/api-token-auth/')
+            .respond(400, {"non_field_errors": ["Unable to login with provided credentials."]});
+
+        $scope = { username: 'adm', password: 'adm' };
+
+        service.login($scope.username, $scope.password)
+                .catch(function(err){
+                   error = err;
+                });
+
+        httpBackend.flush();
+
+        expect(error.non_field_errors[0]).toBe("Unable to login with provided credentials.");
+    });
+    it('should return an error on login failure -- undefined username/password', function () {
+        expect(LoginCtrl).toBeDefined();
+
+        var error;
+        httpBackend.expectPOST('http://userservice.staging.tangentmicroservices.com/api-token-auth/')
+            .respond(400, {"username": ["This field is required."], "password": ["This field is required."]});
+
+        $scope = { username: '', password: '' };
+
+        service.login($scope.username, $scope.password)
+                .catch(function(err){
+                   error = err;
+                });
+
+        httpBackend.flush();
+
+        expect(error).toEqual({"username": ["This field is required."], "password": ["This field is required."]});
+    });
 
 });
