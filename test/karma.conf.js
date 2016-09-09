@@ -17,9 +17,9 @@ module.exports = function(config) {
       'jasmine'
     ],
 
-    preprocessors: {
-      "app/scripts/**/*.js": "coverage"
-    },
+    // preprocessors: {
+    //   "app/scripts/**/*.js": "coverage"
+    // },
 
     // list of files / patterns to load in the browser
     files: [
