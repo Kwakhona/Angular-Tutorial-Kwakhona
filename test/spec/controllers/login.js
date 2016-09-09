@@ -17,7 +17,7 @@ describe('Controller: LoginCtrl', function () {
 
     }));
 
-    it('should initialize the LoginCtrl', function () {
+    it('should initialize the Login controller', function () {
         expect(LoginCtrl).toBeDefined();
     });
 
