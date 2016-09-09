@@ -19,18 +19,18 @@ angular.module('angularTutorialKwakhonaApp')
                     $window.alert(JSON.stringify(error));
                 });
         };
+        // error handling method
+       var handleError = function(error) {
+            if(isDefined(error)){
+                $window.alert(JSON.stringify(error));
+            }
+        };
         // verify value is defined
         var isDefined = function (value) {
             if (angular.isDefined(value)) {
                 return true;
             }
             return false;
-        };
-        // error handling method
-       var handleError = function(error) {
-            if(isDefined(error)){
-                $window.alert(JSON.stringify(error));
-            }
         };
         
         // updating add/edit form
