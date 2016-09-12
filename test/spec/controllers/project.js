@@ -12,9 +12,9 @@ describe('Controller: ProjectCtrl', function () {
         httpBackend;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, $rootScope, _projectService_, _$httpBackend_) {
-        rootScope = $rootScope;
-        scope = $rootScope.$new();
+    beforeEach(inject(function ($controller, _$rootScope_, _projectService_, _$httpBackend_) {
+        rootScope = _$rootScope_;
+        scope = _$rootScope_.$new();
 
         httpBackend = _$httpBackend_;
         projectService = _projectService_;
@@ -30,7 +30,7 @@ describe('Controller: ProjectCtrl', function () {
 
     it('should get a list of projects', function () {
 
-        httpBackend.expect('GET', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/")
+        httpBackend.when('GET', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/")
             .respond(200,
             [
                 { "pk": 35, "title": "Justice Unit Tester", "description": "To run unit tests on the project2", "start_date": "2016-08-22", "end_date": "2017-01-27", "is_billable": false, "is_active": false, "task_set": [], "resource_set": [] },
@@ -51,7 +51,7 @@ describe('Controller: ProjectCtrl', function () {
 
     it('should add project successfully', function () {
 
-        httpBackend.expect('POST', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/")
+        httpBackend.when('POST', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/")
             .respond(201,
             {
                 pk: 143,
@@ -93,7 +93,7 @@ describe('Controller: ProjectCtrl', function () {
 
     it('should update project details(title, description, start_date & is_billable) successfully', function () {
 
-        httpBackend.expect('PUT', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/142/")
+        httpBackend.when('PUT', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/142/")
             .respond(200,
             {
                 pk: 142,
@@ -138,7 +138,7 @@ describe('Controller: ProjectCtrl', function () {
 
     it('should return a error message on project update failure -- Require fields(title, description & start_date)', function () {
 
-        httpBackend.expect('PUT', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/142/")
+        httpBackend.when('PUT', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/142/")
             .respond(400,
             {
                 "title": ["This field may not be blank."],
@@ -167,7 +167,7 @@ describe('Controller: ProjectCtrl', function () {
 
     it('should return a error message on project update failure -- Incorrect Date format(start_date & end_date)', function () {
 
-        httpBackend.expect('PUT', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/142/")
+        httpBackend.when('PUT', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/142/")
             .respond(400,
             {
                 "start_date": ["Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]]."],
@@ -196,7 +196,7 @@ describe('Controller: ProjectCtrl', function () {
 
     it('should delete a project successfully', function () {
 
-        httpBackend.expect('DELETE', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/142/")
+        httpBackend.when('DELETE', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/142/")
             .respond(204);
 
         var project = {
