@@ -10,15 +10,17 @@ describe('Controller: LoginCtrl', function () {
         location,
         cookie,
         httpBackend,
+        win,
         service;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, $rootScope, $httpBackend ,UserAuthentication, $location, $cookies) {
+    beforeEach(inject(function ($controller, $rootScope, $httpBackend ,UserAuthentication, $location, $cookies, $window) {
         $scope = $rootScope.$new();
         cookie = $cookies;
         service = UserAuthentication;
         location = $location;
         httpBackend = $httpBackend;
+        win = $window;
 
         LoginCtrl = $controller('LoginCtrl', {
             $scope: $scope,
@@ -59,6 +61,7 @@ describe('Controller: LoginCtrl', function () {
         service.login($scope.username, $scope.password)
                 .catch(function(err){
                    error = err;
+                   win.alert("Error: "+ err.non_field_errors);
                 });
 
         httpBackend.flush();
@@ -77,6 +80,9 @@ describe('Controller: LoginCtrl', function () {
         service.login($scope.username, $scope.password)
                 .catch(function(err){
                    error = err;
+                   if(angular.isDefined(error.username) || angular.isDefined(error.password)){
+                        win.alert("Username/Password is required. Please try again");
+                   }
                 });
 
         httpBackend.flush();
