@@ -13,15 +13,17 @@ angular.module('angularTutorialKwakhonaApp')
         $scope.init = function () {
             projectService.getProjects()
                 .then(function (response) {
+                    $scope.success = true;
                     $scope.projects = response.data;
                 })
                 .catch(function (error) {
+                    $scope.success = false;
                     $window.alert(JSON.stringify(error));
                 });
         };
         // error handling method
-       $scope.handleError = function(error) {
-            if($scope.isDefined(error)){
+        $scope.handleError = function (error) {
+            if ($scope.isDefined(error)) {
                 $window.alert(JSON.stringify(error));
             }
         };
@@ -32,7 +34,7 @@ angular.module('angularTutorialKwakhonaApp')
             }
             return false;
         };
-        
+
         // updating add/edit form
         $scope.UpdateForm = function (project) {
             $scope.form = { edited: false, added: false };
@@ -66,10 +68,12 @@ angular.module('angularTutorialKwakhonaApp')
 
             projectService.createProject($scope.project)
                 .then(function () {
+                    $scope.success = true;
                     $scope.form = { 'added': true };
                     $scope.init();
                 })
                 .catch(function (error) {
+                    $scope.success = false;
                     $scope.handleError(error);
                 });
         };
@@ -79,10 +83,12 @@ angular.module('angularTutorialKwakhonaApp')
 
             projectService.updateProject($scope.project.pk, $scope.project)
                 .then(function () {
+                    $scope.success = true;
                     $scope.form = { 'edited': true };
                     $scope.init();
                 })
                 .catch(function (error) {
+                    $scope.success = false;
                     $scope.handleError(error);
                 });
         };
@@ -92,9 +98,11 @@ angular.module('angularTutorialKwakhonaApp')
             if ($window.confirm("Are you sure you want to delete project: " + project.title) === true) {
                 projectService.deleteProject(project.pk)
                     .then(function () {
+                        $scope.success = true;
                         $scope.init();
                     })
                     .catch(function (error) {
+                    $scope.success = false;
                         $scope.handleError(error);
                     });
             } else {
