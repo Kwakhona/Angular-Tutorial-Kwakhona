@@ -10,14 +10,16 @@ describe('Controller: LoginCtrl', function () {
         location,
         cookie,
         httpBackend,
+        UserAuthentication,
         win;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, $rootScope, $httpBackend, $location, $cookies, $window) {
+    beforeEach(inject(function ($controller, $rootScope, _UserAuthentication_, _$httpBackend_, _$location_, _$cookies_, $window) {
         $scope = $rootScope.$new();
-        cookie = $cookies;
-        location = $location;
-        httpBackend = $httpBackend;
+        cookie = _$cookies_;
+        location = _$location_;
+        httpBackend = _$httpBackend_;
+        UserAuthentication = _UserAuthentication_;
         win = $window;
 
         LoginCtrl = $controller('LoginCtrl', {
@@ -29,7 +31,7 @@ describe('Controller: LoginCtrl', function () {
     it('should initialize the Login controller', function () {
         expect(LoginCtrl).toBeDefined();
     });
-    it('should redirect user after successful login', inject(function (UserAuthentication) {
+    it('should redirect user after successful login',function () {
         expect(LoginCtrl).toBeDefined();
 
         httpBackend.expectPOST('http://userservice.staging.tangentmicroservices.com/api-token-auth/')
@@ -46,9 +48,9 @@ describe('Controller: LoginCtrl', function () {
         httpBackend.flush();
 
 
-    }));
+    });
 
-    it('should return an error on login failure -- wrong username/password', inject(function (UserAuthentication) {
+    it('should return an error on login failure -- wrong username/password', function () {
         expect(LoginCtrl).toBeDefined();
 
         var error;
@@ -68,8 +70,8 @@ describe('Controller: LoginCtrl', function () {
         httpBackend.flush();
 
 
-    }));
-    it('should return an error on login failure -- undefined username/password', inject(function (UserAuthentication) {
+    });
+    it('should return an error on login failure -- undefined username/password', function () {
         expect(LoginCtrl).toBeDefined();
 
         var error;
@@ -88,6 +90,6 @@ describe('Controller: LoginCtrl', function () {
             });
 
         httpBackend.flush();
-    }));
+    });
 
 });
