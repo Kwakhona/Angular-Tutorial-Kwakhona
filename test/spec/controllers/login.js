@@ -14,10 +14,10 @@ describe('Controller: LoginCtrl', function () {
         UserAuthentication;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, $rootScope, $httpBackend, UserAuthentication, $location, $cookies, $window) {
+    beforeEach(inject(function ($controller, $rootScope, $httpBackend, _UserAuthentication, $location, $cookies, $window) {
         $scope = $rootScope.$new();
         cookie = $cookies;
-        UserAuthentication = UserAuthentication;
+        UserAuthentication = _UserAuthentication;
         location = $location;
         httpBackend = $httpBackend;
         win = $window;
