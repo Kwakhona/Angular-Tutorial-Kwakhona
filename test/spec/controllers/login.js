@@ -81,7 +81,7 @@ describe('Controller: LoginCtrl', function () {
                 .catch(function(err){
                    error = err;
                    if(angular.isDefined(error.username) || angular.isDefined(error.password)){
-                        $window.alert("Username/Password is required. Please try again");
+                        win.alert("Username/Password is required. Please try again");
                    }
                 });
 
