@@ -23,8 +23,9 @@ describe('Controller: LoginCtrl', function () {
         win = $window;
 
         LoginCtrl = $controller('LoginCtrl', {
-            $scope: $scope
+            $scope: $scope, $cookies: cookie, UserAuthentication: UserAuthentication, $location: location, $window: win
         });
+        $scope.$digest();
 
     }));
 

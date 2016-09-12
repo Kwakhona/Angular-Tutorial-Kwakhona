@@ -10,7 +10,7 @@
 angular.module('angularTutorialKwakhonaApp')
     .controller('ProjectCtrl', function ($scope, $window, $route, projectService) {
         // get all projects
-        var init = function () {
+        $scope.init = function () {
             projectService.getProjects()
                 .then(function (response) {
                     $scope.projects = response.data;
@@ -20,13 +20,13 @@ angular.module('angularTutorialKwakhonaApp')
                 });
         };
         // error handling method
-       var handleError = function(error) {
-            if(isDefined(error)){
+       $scope.handleError = function(error) {
+            if($scope.isDefined(error)){
                 $window.alert(JSON.stringify(error));
             }
         };
         // verify value is defined
-        var isDefined = function (value) {
+        $scope.isDefined = function (value) {
             if (angular.isDefined(value)) {
                 return true;
             }
@@ -37,7 +37,7 @@ angular.module('angularTutorialKwakhonaApp')
         $scope.UpdateForm = function (project) {
             $scope.form = { edited: false, added: false };
 
-            if (isDefined(project)) {
+            if ($scope.isDefined(project)) {
                 $scope.project = {
                     pk: project.pk,
                     title: project.title,
@@ -67,10 +67,10 @@ angular.module('angularTutorialKwakhonaApp')
             projectService.createProject($scope.project)
                 .then(function () {
                     $scope.form = { 'added': true };
-                    init();
+                    $scope.init();
                 })
                 .catch(function (error) {
-                    handleError(error);
+                    $scope.handleError(error);
                 });
         };
 
@@ -80,10 +80,10 @@ angular.module('angularTutorialKwakhonaApp')
             projectService.updateProject($scope.project.pk, $scope.project)
                 .then(function () {
                     $scope.form = { 'edited': true };
-                    init();
+                    $scope.init();
                 })
                 .catch(function (error) {
-                    handleError(error);
+                    $scope.handleError(error);
                 });
         };
 
@@ -92,15 +92,15 @@ angular.module('angularTutorialKwakhonaApp')
             if ($window.confirm("Are you sure you want to delete project: " + project.title) === true) {
                 projectService.deleteProject(project.pk)
                     .then(function () {
-                        init();
+                        $scope.init();
                     })
                     .catch(function (error) {
-                        handleError(error);
+                        $scope.handleError(error);
                     });
             } else {
                 $window.alert("You have cancelled the deletion off project: " + project.title);
             }
         };
 
-        init();
+        $scope.init();
     });

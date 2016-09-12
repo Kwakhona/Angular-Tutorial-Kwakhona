@@ -6,21 +6,21 @@ describe('Controller: ProjectCtrl', function () {
     beforeEach(module('angularTutorialKwakhonaApp'));
 
     var ProjectCtrl,
-        $scope,
+        scope,
         rootScope,
-        service,
+        projectService,
         httpBackend;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, $rootScope, projectService, $httpBackend) {
+    beforeEach(inject(function ($controller, $rootScope, _projectService_, _$httpBackend_) {
         rootScope = $rootScope;
-        $scope = $rootScope.$new();
+        scope = $rootScope.$new();
 
-        httpBackend = $httpBackend;
-        service = projectService;
+        httpBackend = _$httpBackend_;
+        projectService = _projectService_;
 
         ProjectCtrl = $controller('ProjectCtrl', {
-            $scope: $scope
+            $scope: scope
         });
     }));
 
@@ -43,7 +43,7 @@ describe('Controller: ProjectCtrl', function () {
                 { "pk": 142, "title": "Kwakhona Mahamba", "description": "Kwakhona's Test Project", "start_date": "2016-09-09", "end_date": "2016-09-28", "is_billable": true, "is_active": true, "task_set": [], "resource_set": [] }
             ]);
 
-        service.getProjects()
+        projectService.getProjects()
             .then(function (response) {
                 expect(response.data[0]).toBe({ "pk": 35, "title": "Justice Unit Tester", "description": "To run unit tests on the project2", "start_date": "2016-08-22", "end_date": "2017-01-27", "is_billable": false, "is_active": false, "task_set": [], "resource_set": [] });
             });
@@ -74,7 +74,7 @@ describe('Controller: ProjectCtrl', function () {
             is_active: true
         };
 
-        service.createProject(project)
+        projectService.createProject(project)
             .then(function (response) {
                 expect(response.data).toBe({
                     pk: 143,
@@ -119,7 +119,7 @@ describe('Controller: ProjectCtrl', function () {
             resource_set: []
         };
 
-        service.updateProject(project.pk, project)
+        projectService.updateProject(project.pk, project)
             .then(function (response) {
                 expect(response.data).toBe({
                     pk: 142,
@@ -154,7 +154,7 @@ describe('Controller: ProjectCtrl', function () {
             is_active: true
         };
 
-        service.updateProject(project.pk, project)
+        projectService.updateProject(project.pk, project)
             .then(function (response) {
                 expect(response.data).toBe({
                     "title": ["This field may not be blank."],
@@ -184,7 +184,7 @@ describe('Controller: ProjectCtrl', function () {
             is_active: true
         };
 
-        service.updateProject(project.pk, project)
+        projectService.updateProject(project.pk, project)
             .then(function (response) {
                 expect(response.data).toBe({
                     "start_date": ["Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]]."],
@@ -209,7 +209,7 @@ describe('Controller: ProjectCtrl', function () {
             is_active: true
         };
 
-        service.deleteProject(project)
+        projectService.deleteProject(project)
             .then(function (response) {
                 expect(response.status).toBe(204);
             });
