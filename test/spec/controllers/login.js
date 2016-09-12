@@ -39,12 +39,13 @@ describe('Controller: LoginCtrl', function () {
         UserAuthentication.login($scope.username, $scope.password)
             .then(function () {
                 location.path('/projects');
+                expect(location.path()).toBe('/projects');
                 expect(cookie.get('token')).toBe('71456dbd15de0c0b6d2b4b44e5a92ad94c6def97');
             });
 
         httpBackend.flush();
 
-        
+
     }));
 
     it('should return an error on login failure -- wrong username/password', inject(function (UserAuthentication) {
@@ -87,8 +88,6 @@ describe('Controller: LoginCtrl', function () {
             });
 
         httpBackend.flush();
-
-
     }));
 
 });
