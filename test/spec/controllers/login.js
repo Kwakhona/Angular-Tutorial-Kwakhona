@@ -47,21 +47,13 @@ describe('Controller: LoginCtrl', function () {
     it('should return an error on login failure -- wrong username/password', function () {
         expect(LoginCtrl).toBeDefined();
 
-        var error;
         httpBackend.when('POST','http://userservice.staging.tangentmicroservices.com/api-token-auth/')
             .respond(400, { "non_field_errors": ["Unable to login with provided credentials."] });
 
-        scope = { username: 'adm', password: 'adm' };
-
-        UserAuthentication.login(scope.username, scope.password)
-            .catch(function (err) {
-                if(angular.isDefined(err.non_field_errors)){
-                    error = err;
-                }
-            });
+        scope.Login();
 
         httpBackend.flush();
-        expect(error.non_field_errors[0]).toBe("Unable to login with provided credentials.");
+        expect(scope.error.non_field_errors[0]).toBe("Unable to login with provided credentials.");
 
 
     });
@@ -71,19 +63,12 @@ describe('Controller: LoginCtrl', function () {
         var error;
         httpBackend.when('POST','http://userservice.staging.tangentmicroservices.com/api-token-auth/')
             .respond(400, { "username": ["This field is required."], "password": ["This field is required."] });
-
-        scope = { username: '', password: '' };
-
-        UserAuthentication.login(scope.username, scope.password)
-            .catch(function (err) {
-                if(angular.isDefined(err.username) || angular.isDefined(err.password)){
-                    error = err;
-                }
-            });
+        
+        scope.Login();
 
         httpBackend.flush();
-        expect(error.username[0]).toBe("This field is required.");
-        expect(error.password[0]).toBe("This field is required.");
+        expect(scope.error.username[0]).toBe("This field is required.");
+        expect(scope.error.password[0]).toBe("This field is required.");
     });
 
 });
