@@ -6,213 +6,268 @@ describe('Controller: ProjectCtrl', function () {
     beforeEach(module('angularTutorialKwakhonaApp'));
 
     var ProjectCtrl,
-        scope,
-        rootScope,
+        $scope,
+        $rootScope,
         projectService,
-        httpBackend;
+        httpBackend,
+        url;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, _$rootScope_, _projectService_, _$httpBackend_) {
-        rootScope = _$rootScope_;
-        scope = _$rootScope_.$new();
+    beforeEach(inject(function ($controller, _$rootScope_, _projectService_, _$httpBackend_, _PROJECT_SERVICE_BASE_URI_) {
+        $rootScope = _$rootScope_;
+        $scope = _$rootScope_.$new();
 
         httpBackend = _$httpBackend_;
         projectService = _projectService_;
+        url = _PROJECT_SERVICE_BASE_URI_;
+
 
         ProjectCtrl = $controller('ProjectCtrl', {
-            $scope: scope
+            $scope: $scope, projectService: projectService
         });
     }));
 
-    it('should initialize the Project controller', function () {
-        expect(ProjectCtrl).toBeDefined();
-    });
 
-    it('should get a list of projects', function () {
 
-        httpBackend.when('GET', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/")
+    it('should get a list of projects ', function () {
+        httpBackend.when('GET', /^.*/)
             .respond(200,
             [
-                { "pk": 35, "title": "Justice Unit Tester", "description": "To run unit tests on the project2", "start_date": "2016-08-22", "end_date": "2017-01-27", "is_billable": false, "is_active": false, "task_set": [], "resource_set": [] },
-                { "pk": 136, "title": "Test - old me", "description": "Test", "start_date": "2015-09-09", "end_date": "2016-09-09", "is_billable": true, "is_active": true, "task_set": [], "resource_set": [] },
-                { "pk": 133, "title": "Test - ert", "description": "Testing", "start_date": "2016-09-09", "end_date": "2016-08-09", "is_billable": true, "is_active": true, "task_set": [], "resource_set": [] },
-                { "pk": 134, "title": "Test - modify", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "start_date": "2016-05-03", "end_date": "2016-03-09", "is_billable": true, "is_active": true, "task_set": [], "resource_set": [] },
-                { "pk": 140, "title": "KG testing", "description": "My testing", "start_date": "2015-09-08", "end_date": "2016-03-04", "is_billable": false, "is_active": false, "task_set": [], "resource_set": [] },
-                { "pk": 131, "title": "Simple Test23", "description": "Simple Test of a applicaion maybee", "start_date": "2016-11-30", "end_date": "2016-12-01", "is_billable": true, "is_active": true, "task_set": [], "resource_set": [] },
-                { "pk": 141, "title": "Test Title - Ernest", "description": "This is a test description - update", "start_date": "2016-10-25", "end_date": "2016-11-11", "is_billable": true, "is_active": true, "task_set": [], "resource_set": [] },
-                { "pk": 142, "title": "Kwakhona Mahamba", "description": "Kwakhona's Test Project", "start_date": "2016-09-09", "end_date": "2016-09-28", "is_billable": true, "is_active": true, "task_set": [], "resource_set": [] }
+                { "pk": 179, "title": "HenryNduTest-Passed", "description": "Henry test.", "start_date": "2016-05-03", "end_date": "2016-03-09", "is_billable": true, "is_active": true, "task_set": [], "resource_set": [] },
+                { "pk": 134, "title": "Test - modify", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "start_date": "2016-05-03", "end_date": "2016-03-09", "is_billable": true, "is_active": true, "task_set": [], "resource_set": [] }
             ]);
+        $scope.init();
 
-        projectService.getProjects()
-            .then(function (response) {
-                expect(response.data[0]).toBe({ "pk": 35, "title": "Justice Unit Tester", "description": "To run unit tests on the project2", "start_date": "2016-08-22", "end_date": "2017-01-27", "is_billable": false, "is_active": false, "task_set": [], "resource_set": [] });
-            });
+        httpBackend.flush();
+
+        expect($scope.success).toBe(true);
+        expect($scope.projects).toEqual(
+            [
+                { "pk": 179, "title": "HenryNduTest-Passed", "description": "Henry test.", "start_date": "2016-05-03", "end_date": "2016-03-09", "is_billable": true, "is_active": true, "task_set": [], "resource_set": [] },
+                { "pk": 134, "title": "Test - modify", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "start_date": "2016-05-03", "end_date": "2016-03-09", "is_billable": true, "is_active": true, "task_set": [], "resource_set": [] }
+            ]);
     });
 
-    it('should add project successfully', function () {
-
-        httpBackend.when('POST', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/")
-            .respond(201,
-            {
-                pk: 143,
-                title: "Kwakhona Richard Mahamba",
-                description: "Kwakhona's 3rd Test Project",
-                start_date: "2016-09-19",
-                end_date: "2016-09-28",
-                is_billable: false,
-                is_active: true,
-                task_set: [],
-                resource_set: []
-            });
-
-        var project = {
-            title: "Kwakhona Richard Mahamba",
-            description: "Kwakhona's 3rd Test Project",
-            start_date: "2016-09-19",
-            end_date: "2016-09-28",
-            is_billable: false,
+    it('should add a new project successfully', function () {
+        $scope.project = {
+            title: "Kwakhona Mahamba is here",
+            description: "Kwakhon's test calls",
+            start_date: "2016-05-03",
+            end_date: "2016-03-09",
+            is_billable: true,
             is_active: true
         };
+        httpBackend.when('GET', /^.*/).respond(200, {});
+        httpBackend.when('POST', /^.*/)
+            .respond(200,
+            { "pk": 190, "title": "Kwakhona Mahamba is here", "description": "Kwakhon's test calls", "start_date": "2016-05-03", "end_date": "2016-03-09", "is_billable": true, "is_active": true, "task_set": [], "resource_set": [] }
+            );
 
-        projectService.createProject(project)
-            .then(function (response) {
-                expect(response.data).toBe({
-                    pk: 143,
-                    title: "Kwakhona Richard Mahamba",
-                    description: "Kwakhona's 3rd Test Project",
-                    start_date: "2016-09-19",
-                    end_date: "2016-09-28",
-                    is_billable: false,
-                    is_active: true,
-                    task_set: [],
-                    resource_set: []
-                });
-            });
+        $scope.addProject($scope.project);
 
+        httpBackend.flush();
+
+        expect($scope.success).toBe(true);
+        expect($scope.form.added).toBe(true);
+        expect($scope.res.data).toEqual(
+            { "pk": 190, "title": "Kwakhona Mahamba is here", "description": "Kwakhon's test calls", "start_date": "2016-05-03", "end_date": "2016-03-09", "is_billable": true, "is_active": true, "task_set": [], "resource_set": [] }
+        );
     });
 
-    it('should update project details(title, description, start_date & is_billable) successfully', function () {
+    it('should updated a project successfully', function () {
+        // updated project
+        $scope.project = {
+            pk: 190,
+            title: "Kwakhona Mahamba not is here",
+            description: "Kwakhona test calls",
+            start_date: "2016-05-03",
+            end_date: "2016-03-09",
+            is_billable: true,
+            is_active: false
+        };
 
-        httpBackend.when('PUT', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/142/")
+        httpBackend.when('GET', /^.*/).respond(200, {});
+        httpBackend.when('PUT', /^.*/)
             .respond(200,
             {
-                pk: 142,
-                title: "Kwakhona Richard Mahamba",
-                description: "Kwakhona's 3rd Test Project",
-                start_date: "2016-09-19",
-                end_date: "2016-09-28",
-                is_billable: false,
-                is_active: true,
-                task_set: [],
-                resource_set: []
-            });
+                "pk": 190,
+                "title": "Kwakhona Mahamba is not here",
+                "description": "Kwakhona test calls",
+                "start_date": "2016-05-03",
+                "end_date": "2016-03-09",
+                "is_billable": true,
+                "is_active": false,
+                "task_set": [],
+                "resource_set": []
+            }
+            );
 
-        var project = {
-            pk: 142,
-            title: "Kwakhona Richard Mahamba",
-            description: "Kwakhona's 3rd Test Project",
-            start_date: "2016-09-19",
-            end_date: "2016-09-28",
-            is_billable: false,
-            is_active: true,
-            task_set: [],
-            resource_set: []
-        };
+        $scope.updateProject($scope.project.pk, $scope.project);
 
-        projectService.updateProject(project.pk, project)
-            .then(function (response) {
-                expect(response.data).toBe({
-                    pk: 142,
-                    title: "Kwakhona Richard Mahamba",
-                    description: "Kwakhona's 3rd Test Project",
-                    start_date: "2016-09-19",
-                    end_date: "2016-09-28",
-                    is_billable: false,
-                    is_active: true,
-                    task_set: [],
-                    resource_set: []
-                });
-            });
+        httpBackend.flush();
 
-    });
-
-    it('should return a error message on project update failure -- Require fields(title, description & start_date)', function () {
-
-        httpBackend.when('PUT', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/142/")
-            .respond(400,
+        expect($scope.success).toBe(true);
+        expect($scope.form.edited).toBe(true);
+        expect($scope.res.data).toEqual(
             {
-                "title": ["This field may not be blank."],
-                "start_date": ["This field is required."],
-                "description": ["This field may not be blank."]
-            });
-
-        var project = {
-            pk: 142,
-            title: "",
-            description: "",
-            is_billable: false,
-            is_active: true
-        };
-
-        projectService.updateProject(project.pk, project)
-            .then(function (response) {
-                expect(response.data).toBe({
-                    "title": ["This field may not be blank."],
-                    "start_date": ["This field is required."],
-                    "description": ["This field may not be blank."]
-                });
-            });
-
-    });
-
-    it('should return a error message on project update failure -- Incorrect Date format(start_date & end_date)', function () {
-
-        httpBackend.when('PUT', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/142/")
-            .respond(400,
-            {
-                "start_date": ["Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]]."],
-                "end_date": ["Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]]."]
-            });
-
-        var project = {
-            pk: 142,
-            title: "Kwakhona is here",
-            description: "Testing is supreme tool",
-            start_date: "",
-            end_date: "02-02-1990",
-            is_billable: false,
-            is_active: true
-        };
-
-        projectService.updateProject(project.pk, project)
-            .then(function (response) {
-                expect(response.data).toBe({
-                    "start_date": ["Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]]."],
-                    "end_date": ["Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]]."]
-                });
-            });
-
+                "pk": 190,
+                "title": "Kwakhona Mahamba is not here",
+                "description": "Kwakhona test calls",
+                "start_date": "2016-05-03",
+                "end_date": "2016-03-09",
+                "is_billable": true,
+                "is_active": false,
+                "task_set": [],
+                "resource_set": []
+            }
+        );
     });
 
     it('should delete a project successfully', function () {
-
-        httpBackend.when('DELETE', "http://projectservice.staging.tangentmicroservices.com/api/v1/projects/142/")
-            .respond(204);
-
-        var project = {
-            pk: 142,
-            title: "Kwakhona Richard Mahamba",
-            description: "Kwakhona's 2nd Test Project",
-            start_date: "2016-09-19",
-            end_date: "2016-09-28",
-            is_billable: false,
-            is_active: true
+        // project to be deleted
+        $scope.project = {
+            pk: 190,
+            title: "Kwakhona Mahamba not is here",
+            description: "Kwakhona test calls",
+            start_date: "2016-05-03",
+            end_date: "2016-03-09",
+            is_billable: true,
+            is_active: false
         };
 
-        projectService.deleteProject(project)
-            .then(function (response) {
-                expect(response.status).toBe(204);
+        httpBackend.when('GET', /^.*/).respond(200, {});
+        httpBackend.when('DELETE', /^.*/)
+            .respond(204);
+
+        projectService.deleteProject($scope.project.pk)
+            .then(function (res) {
+                $scope.res = res;
             });
 
+        httpBackend.flush();
+
+        expect($scope.success).toBe(true);
+        expect($scope.res.status).toEqual(204);
+    });
+
+    it('should update the $scope.project which updates the add form', function(){
+        var _project = {
+            title: "Mr Mahamba",
+            description: "Mr Mahamba is not just my father",
+            start_date: "2016-05-03",
+            end_date: "2016-03-09",
+            is_billable: true,
+            is_active: true
+        };
+        $scope.UpdateForm(_project);
+        expect($scope.project).toBeDefined();
+    });
+    it('should update the $scope.project which updates the edit form', function(){
+        var _project = {
+            pk: 190,
+            title: "Mr KR Mahamba",
+            description: "Mr Mahamba is not just my father or his brothers and grandfather",
+            start_date: "2016-05-03",
+            end_date: "2016-03-09",
+            is_billable: true,
+            is_active: true
+        };
+        $scope.UpdateForm(_project);
+
+        expect($scope.project).toBeDefined();
+    });
+
+    it('should handle error on delete project failure', function(){
+        var error;
+        
+        // error returned when the project the user is trying to delete does not exists
+        httpBackend.when('GET', /^.*/).respond(200, {});
+        httpBackend.when('DELETE', /^.*/)
+            .respond(404, {"detail":"Not found."});
+
+        projectService.deleteProject(15566)
+            .catch(function (err) {
+                error = err;
+            });
+        httpBackend.flush();
+
+        expect(error.data).toEqual({"detail":"Not found."});
+
+    });
+    it('should handle error on update project failure', function(){
+        var error;
+        // error returned when the project the user is trying to update does not exists
+        $scope.project = {
+            pk: 15555,
+            title: "Kwakhona Mahamba is here",
+            description: "Kwakhon's test calls",
+            start_date: "2016-05-03",
+            end_date: "2016-03-09",
+            is_billable: true,
+            is_active: true
+        };
+        httpBackend.when('GET', /^.*/).respond(200, {});
+        httpBackend.when('PUT', /^.*/)
+            .respond(404, {"detail":"Not found."});
+
+        projectService.updateProject($scope.project.pk, $scope.project)
+            .catch(function(err){
+                error = err;
+            });
+        httpBackend.flush();
+
+        expect(error.data).toEqual({"detail":"Not found."});
+    });
+    it('should handle error on add new project failure -- Blank title/description', function(){
+        var error;
+        // error returned when the project user is trying to add doesn't has a title/description
+        $scope.project = {
+            title: "",
+            description: "",
+            start_date: "2016-05-03",
+            end_date: "2016-03-09",
+            is_billable: true,
+            is_active: true
+        };
+        httpBackend.when('GET', /^.*/).respond(200, {});
+        httpBackend.when('POST', 'http://projectservice.staging.tangentmicroservices.com/api/v1/projects/')
+            .respond(400, {"description":["This field may not be blank."],"title":["This field may not be blank."]});
+
+        projectService.createProject($scope.project)
+            .catch(function(err){
+                error = err;
+            });
+        httpBackend.flush();
+
+        expect(error.status).toBe(400);
+        expect(error.data).toEqual({"description":["This field may not be blank."],"title":["This field may not be blank."]});
+    });
+    it('should handle error on add new project failure -- Wrong Date format', function(){
+        var error;
+        // error returned when the project user is trying to add doesn't has a the incorrect format(YYYY-MM-DD) for start_date/end_date
+        $scope._project = {
+            title: "Kwaks",
+            description: "Kwask is here too",
+            start_date: "",
+            end_date: "",
+            is_billable: true,
+            is_active: true
+        };
+        httpBackend.when('GET', /^.*/).respond(200, {});
+        httpBackend.when('POST', 'http://projectservice.staging.tangentmicroservices.com/api/v1/projects/')
+            .respond(400, {
+                "start_date":["Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]]."],
+                "end_date":["Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]]."]
+            });
+
+        projectService.createProject($scope._project)
+            .catch(function(err){
+                error = err;
+            });
+        httpBackend.flush();
+
+        expect(error.status).toBe(400);
+        expect(error.data.start_date[0]).toEqual("Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]].");
+        expect(error.data.end_date[0]).toEqual("Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]].");
     });
 });

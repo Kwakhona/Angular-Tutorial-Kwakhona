@@ -20,23 +20,27 @@ describe('Service: httpHelpers', function () {
         httpBackend.expectGET(/^.*/).respond(200, '');
 
         var data = {};
+        var res;
         service.get(url, data)
-            .then(function (res) {
-                expect(res.status).toBe(200);
+            .then(function (response) {
+                res = response;
             });
 
         httpBackend.flush();
+        expect(res.status).toBe(200);
     });
     it('should make a HTTP GET call successfully -- with a projectId', function () {
         httpBackend.expectGET(/^.*/).respond(200, '');
 
         var data = { projectId: 155 };
+        var res;
         service.get(url, data)
-            .then(function (res) {
-                expect(res.status).toBe(200);
+            .then(function (response) {
+                res = response;
             });
 
         httpBackend.flush();
+        expect(res.status).toBe(200);
     });
 
     it('should make a HTTP POST call successfully', function () {
@@ -50,16 +54,18 @@ describe('Service: httpHelpers', function () {
             is_billable: true,
             is_active: true
         };
+        var res;
         service.create(url, data)
-            .then(function (res) {
-                expect(res.status).toBe(201);
+            .then(function (response) {
+                res = response;
             });
 
         httpBackend.flush();
+        expect(res.status).toBe(201);
     });
 
     it('should make a HTTP PUT call successfully', function () {
-        httpBackend.expectPUT(url+"155/").respond(200, '');
+        httpBackend.expectPUT(url + "155/").respond(200, '');
 
         var data = {
             projectId: 155,
@@ -69,29 +75,33 @@ describe('Service: httpHelpers', function () {
             is_billable: true,
             is_active: true
         };
+        var res;
         service.update(url, data)
-            .then(function (res) {
-                expect(res.status).toBe(200);
+            .then(function (response) {
+                res = response;
             });
 
         httpBackend.flush();
+        expect(res.status).toBe(200);
     });
 
     it('should make a HTTP DELETE call successfully', function () {
-        httpBackend.expectDELETE(url+"155/").respond(204, '');
+        httpBackend.expectDELETE(url + "155/").respond(204, '');
 
         var data = {
             projectId: 155
         };
+        var res;
         service.remove(url, data)
-            .then(function (res) {
-                expect(res.status).toBe(204);
+            .then(function (response) {
+                res = response;
             });
 
         httpBackend.flush();
+        expect(res.status).toBe(204);
     });
 
-    it('should extract a projectId from a url & data object and return a new URL', function(){
+    it('should extract a projectId from a url & data object and return a new URL', function () {
         var _url = 'http://projectservice.staging.tangentmicroservices.com/api/v1/projects/';
         var _data = {
             projectId: 155,
