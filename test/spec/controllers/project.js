@@ -149,7 +149,34 @@ describe('Controller: ProjectCtrl', function () {
         expect($scope.success).toBe(true);
         expect($scope.res.status).toEqual(204);
     });
-    
+
+    it('should update the $scope.project which updates the add form', function(){
+        var _project = {
+            title: "Mr Mahamba",
+            description: "Mr Mahamba is not just my father",
+            start_date: "2016-05-03",
+            end_date: "2016-03-09",
+            is_billable: true,
+            is_active: true
+        };
+        $scope.UpdateForm(_project);
+        expect($scope.project).toBeDefined();
+    });
+    it('should update the $scope.project which updates the edit form', function(){
+        var _project = {
+            pk: 190,
+            title: "Mr KR Mahamba",
+            description: "Mr Mahamba is not just my father or his brothers and grandfather",
+            start_date: "2016-05-03",
+            end_date: "2016-03-09",
+            is_billable: true,
+            is_active: true
+        };
+        $scope.UpdateForm(_project);
+
+        expect($scope.project).toBeDefined();
+    });
+
     it('should handle error on delete project failure', function(){
         var error;
         
