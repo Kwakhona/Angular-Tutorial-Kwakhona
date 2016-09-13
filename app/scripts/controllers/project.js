@@ -43,6 +43,13 @@ angular.module('angularTutorialKwakhonaApp')
         $scope.setSuccess = function(value){
             $scope.success = value;
         };
+        // confirm alert 
+        $scope.confirm = function(title){
+            if($window.confirm("Are you sure you want to delete project: " + title) === true){
+                return true;
+            }
+            return false;
+        }
 
         // updating add/edit form
         $scope.UpdateForm = function (project) {
@@ -106,7 +113,7 @@ angular.module('angularTutorialKwakhonaApp')
 
         // deleting a project
         $scope.deleteProject = function (project) {
-            if ($window.confirm("Are you sure you want to delete project: " + project.title) === true) {
+            if ($scope.confirm(project.title)) {
                 projectService.deleteProject(project.pk)
                     .then(function (response) {
                         $scope.res = response;
