@@ -18,7 +18,7 @@ module.exports = function(config) {
     ],
 
     preprocessors: {
-      //'app/scripts/**/*.js': 'coverage'
+      'app/scripts/**/*.js': ['coverage']
     },
 
     // list of files / patterns to load in the browser
