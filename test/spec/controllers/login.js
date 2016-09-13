@@ -55,7 +55,9 @@ describe('Controller: LoginCtrl', function () {
 
         UserAuthentication.login(scope.username, scope.password)
             .catch(function (err) {
-                error = err;
+                if(angular.isDefined(err.non_field_errors)){
+                    error = err;
+                }
             });
 
         httpBackend.flush();
@@ -74,7 +76,9 @@ describe('Controller: LoginCtrl', function () {
 
         UserAuthentication.login(scope.username, scope.password)
             .catch(function (err) {
-                error = err;
+                if(angular.isDefined(err.username) || angular.isDefined(err.password)){
+                    error = err;
+                }
             });
 
         httpBackend.flush();
