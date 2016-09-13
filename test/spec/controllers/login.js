@@ -60,7 +60,6 @@ describe('Controller: LoginCtrl', function () {
     it('should return an error on login failure -- undefined username/password', function () {
         expect(LoginCtrl).toBeDefined();
 
-        var error;
         httpBackend.when('POST','http://userservice.staging.tangentmicroservices.com/api-token-auth/')
             .respond(400, { "username": ["This field is required."], "password": ["This field is required."] });
         

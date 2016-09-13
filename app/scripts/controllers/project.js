@@ -19,8 +19,11 @@ angular.module('angularTutorialKwakhonaApp')
                     $scope.projects = response.data;
                 })
                 .catch(function (error) {
+                    $scope.error = error;
                     $scope.setSuccess(false);
-                    $window.alert(JSON.stringify(error));
+                    if($scope.isDefined(error.detail)){
+                        $window.alert(error.detail)
+                    }
                 });
         };
         // error handling method
