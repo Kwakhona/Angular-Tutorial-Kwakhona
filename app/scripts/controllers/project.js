@@ -9,9 +9,10 @@
  */
 angular.module('angularTutorialKwakhonaApp')
     .controller('ProjectCtrl', function ($scope, $window, $route, projectService) {
-        $scope.success = false;
+        
         // get all projects
         $scope.init = function () {
+            $scope.success = false;
             projectService.getProjects()
                 .then(function (response) {
                     $scope.success = true;
@@ -106,7 +107,7 @@ angular.module('angularTutorialKwakhonaApp')
                         $scope.init();
                     })
                     .catch(function (error) {
-                    $scope.success = false;
+                        $scope.success = false;
                         $scope.handleError(error);
                     });
             } else {

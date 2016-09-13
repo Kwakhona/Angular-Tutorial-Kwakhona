@@ -127,4 +127,31 @@ describe('Controller: ProjectCtrl', function () {
         );
     });
 
+    it('should delete a project successfully', function () {
+        // updated project
+        $scope.project = {
+            pk: 190,
+            title: "Kwakhona Mahamba not is here",
+            description: "Kwakhona test calls",
+            start_date: "2016-05-03",
+            end_date: "2016-03-09",
+            is_billable: true,
+            is_active: false
+        };
+
+        httpBackend.when('GET', /^.*/).respond(200, {});
+        httpBackend.when('DELETE', /^.*/)
+            .respond(204);
+
+        projectService.deleteProject($scope.project.pk)
+            .then(function(res){
+                $scope.res = res;
+            });
+
+        httpBackend.flush();
+
+        expect($scope.success).toBe(true);
+        expect($scope.res.status).toEqual(204);
+    });
+
 });
