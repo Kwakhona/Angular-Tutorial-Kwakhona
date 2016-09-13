@@ -78,4 +78,53 @@ describe('Controller: ProjectCtrl', function () {
         );
     });
 
+    it('should updated a project successfully', function () {
+        // updated project
+        $scope.project = {
+            pk: 190,
+            title: "Kwakhona Mahamba not is here",
+            description: "Kwakhona test calls",
+            start_date: "2016-05-03",
+            end_date: "2016-03-09",
+            is_billable: true,
+            is_active: false
+        };
+
+        httpBackend.when('GET', /^.*/).respond(200, {});
+        httpBackend.when('PUT', /^.*/)
+            .respond(200,
+            {
+                "pk": 190,
+                "title": "Kwakhona Mahamba is not here",
+                "description": "Kwakhona test calls",
+                "start_date": "2016-05-03",
+                "end_date": "2016-03-09",
+                "is_billable": true,
+                "is_active": false,
+                "task_set": [],
+                "resource_set": []
+            }
+            );
+
+        $scope.updateProject($scope.project.pk, $scope.project);
+
+        httpBackend.flush();
+
+        expect($scope.success).toBe(true);
+        expect($scope.form.edited).toBe(true);
+        expect($scope.res.data).toEqual(
+            {
+                "pk": 190,
+                "title": "Kwakhona Mahamba is not here",
+                "description": "Kwakhona test calls",
+                "start_date": "2016-05-03",
+                "end_date": "2016-03-09",
+                "is_billable": true,
+                "is_active": false,
+                "task_set": [],
+                "resource_set": []
+            }
+        );
+    });
+
 });

@@ -84,7 +84,8 @@ angular.module('angularTutorialKwakhonaApp')
         $scope.updateProject = function () {
 
             projectService.updateProject($scope.project.pk, $scope.project)
-                .then(function () {
+                .then(function (response) {
+                    $scope.res = response;
                     $scope.success = true;
                     $scope.form = { 'edited': true };
                     $scope.init();
@@ -99,7 +100,8 @@ angular.module('angularTutorialKwakhonaApp')
         $scope.deleteProject = function (project) {
             if ($window.confirm("Are you sure you want to delete project: " + project.title) === true) {
                 projectService.deleteProject(project.pk)
-                    .then(function () {
+                    .then(function (response) {
+                        $scope.res = response;
                         $scope.success = true;
                         $scope.init();
                     })
