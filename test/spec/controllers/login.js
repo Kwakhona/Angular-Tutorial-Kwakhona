@@ -2,7 +2,7 @@
 
 describe('Controller: LoginCtrl', function () {
     var LoginCtrl,
-        $scope,
+        scope,
         location,
         cookie,
         httpBackend,
@@ -14,16 +14,16 @@ describe('Controller: LoginCtrl', function () {
 
     // Initialize the controller and a mock scope
     beforeEach(inject(function ($controller, _$rootScope_, _UserAuthentication_, _$httpBackend_, _$location_, _$cookies_) {
-        $scope = _$rootScope_.$new();
+        scope = _$rootScope_.$new();
         cookie = _$cookies_;
         location = _$location_;
         httpBackend = _$httpBackend_;
         UserAuthentication = _UserAuthentication_;
+        
 
         LoginCtrl = $controller('LoginCtrl', {
-            $scope: $scope, $cookies: cookie, UserAuthentication: UserAuthentication, $location: location
+            $scope: scope, $cookies: cookie, UserAuthentication: UserAuthentication, $location: location
         });
-        $scope.$digest();
 
     }));
 
@@ -36,13 +36,7 @@ describe('Controller: LoginCtrl', function () {
         httpBackend.when('POST','http://userservice.staging.tangentmicroservices.com/api-token-auth/')
             .respond(200, { "token": "71456dbd15de0c0b6d2b4b44e5a92ad94c6def97" });
 
-        $scope = { username: 'admin', password: 'admin' };
-
-
-        UserAuthentication.login($scope.username, $scope.password)
-            .then(function () {
-                location.path('/projects');
-            });
+        scope.Login();
 
         httpBackend.flush();
 
@@ -57,9 +51,9 @@ describe('Controller: LoginCtrl', function () {
         httpBackend.when('POST','http://userservice.staging.tangentmicroservices.com/api-token-auth/')
             .respond(400, { "non_field_errors": ["Unable to login with provided credentials."] });
 
-        $scope = { username: 'adm', password: 'adm' };
+        scope = { username: 'adm', password: 'adm' };
 
-        UserAuthentication.login($scope.username, $scope.password)
+        UserAuthentication.login(scope.username, scope.password)
             .catch(function (err) {
                 error = err;
             });
@@ -76,9 +70,9 @@ describe('Controller: LoginCtrl', function () {
         httpBackend.when('POST','http://userservice.staging.tangentmicroservices.com/api-token-auth/')
             .respond(400, { "username": ["This field is required."], "password": ["This field is required."] });
 
-        $scope = { username: '', password: '' };
+        scope = { username: '', password: '' };
 
-        UserAuthentication.login($scope.username, $scope.password)
+        UserAuthentication.login(scope.username, scope.password)
             .catch(function (err) {
                 error = err;
             });
