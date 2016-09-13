@@ -9,6 +9,7 @@
  */
 angular.module('angularTutorialKwakhonaApp')
     .controller('ProjectCtrl', function ($scope, $window, $route, projectService) {
+        $scope.success = false;
         // get all projects
         $scope.init = function () {
             projectService.getProjects()
@@ -67,7 +68,8 @@ angular.module('angularTutorialKwakhonaApp')
         $scope.addProject = function () {
 
             projectService.createProject($scope.project)
-                .then(function () {
+                .then(function (response) {
+                    $scope.res = response;
                     $scope.success = true;
                     $scope.form = { 'added': true };
                     $scope.init();
