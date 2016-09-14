@@ -86,7 +86,6 @@ describe('Controller: ProjectCtrl', function () {
             { "pk": 190, "title": "Kwakhona Mahamba is here", "description": "Kwakhon's test calls", "start_date": "2016-05-03", "end_date": "2016-03-09", "is_billable": true, "is_active": true, "task_set": [], "resource_set": [] }
         );
     });
-
     it('should updated a project successfully', function () {
         // updated project
         $scope.project = {
@@ -135,7 +134,6 @@ describe('Controller: ProjectCtrl', function () {
             }
         );
     });
-
     it('should delete a project successfully', function () {
         // project to be deleted
         var _project = {
@@ -211,7 +209,6 @@ describe('Controller: ProjectCtrl', function () {
         expect(confirm).toBe(false);
     });
 
-
     it('should return error on delete project failure', function () {
 
         // error returned when the project the user is trying to delete does not exists
@@ -262,7 +259,6 @@ describe('Controller: ProjectCtrl', function () {
     });
 
     it('should handle error on update project failure', function () {
-        var error;
         // error returned when the project the user is trying to update does not exists
         $scope.project = {
             pk: 15555,
@@ -277,13 +273,11 @@ describe('Controller: ProjectCtrl', function () {
         httpBackend.when('PUT', /^.*/)
             .respond(404, { "detail": "Not found." });
 
-        projectService.updateProject($scope.project.pk, $scope.project)
-            .catch(function (err) {
-                error = err;
-            });
+        $scope.updateProject();
+
         httpBackend.flush();
 
-        expect(error.data).toEqual({ "detail": "Not found." });
+        expect($scope.error.data).toEqual({ "detail": "Not found." });
     });
     it('should handle error on add new project failure -- Blank title/description', function () {
         var error;
