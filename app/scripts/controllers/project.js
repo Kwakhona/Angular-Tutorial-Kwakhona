@@ -22,7 +22,7 @@ angular.module('angularTutorialKwakhonaApp')
                     $scope.error = error;
                     $scope.setSuccess(false);
                     if($scope.isDefined(error.detail)){
-                        $window.alert(error.detail)
+                        $window.alert(error.detail);
                     }
                 });
         };
@@ -49,7 +49,7 @@ angular.module('angularTutorialKwakhonaApp')
                 return true;
             }
             return false;
-        }
+        };
 
         // updating add/edit form
         $scope.UpdateForm = function (project) {
