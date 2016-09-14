@@ -22,7 +22,11 @@ angular.module('angularTutorialKwakhonaApp')
         };
         // create a new Project
         projectApi.createProject = function (project) {
-            project.start_date = projectApi.dateToString(project.start_date);
+            if(angular.isDefined(project.start_date)){
+                project.start_date = projectApi.dateToString(project.start_date);
+            } else {
+                project.start_date = '';
+            }
             if(angular.isDefined(project.end_date)){
                 project.end_date = projectApi.dateToString(project.end_date);    
             } else {
@@ -52,51 +56,12 @@ angular.module('angularTutorialKwakhonaApp')
         };
         // convert a lond date to string
         projectApi.dateToString = function (date) {
-            var day, month, year = '';
+            var day, month, year;
             // Mon Sep 12 2016 00:00:00 GMT+0200 (South Africa Standard Time)
-            day = date.toString().substr(8, 2);
-            month = date.toString().substr(4, 3);
-            year = date.toString().substr(11, 4);
+            day = date.getDate();
+            month = date.getMonth() + 1;
+            year = date.getFullYear();
 
-
-            switch (month) {
-                case "Jan":
-                    month = "01";
-                    break;
-                case "Feb":
-                    month = "02";
-                    break;
-                case "Mar":
-                    month = "03";
-                    break;
-                case "Apr":
-                    month = "04";
-                    break;
-                case "May":
-                    month = "05";
-                    break;
-                case "Jun":
-                    month = "06";
-                    break;
-                case "Jul":
-                    month = "07";
-                    break;
-                case "Aug":
-                    month = "08";
-                    break;
-                case "Sep":
-                    month = "09";
-                    break;
-                case "Oct":
-                    month = "10";
-                    break;
-                case "Nov":
-                    month = "11";
-                    break;
-                case "Dec":
-                    month = "12";
-                    break;
-            }
             return year + "-" + month + "-" + day;
         };
 

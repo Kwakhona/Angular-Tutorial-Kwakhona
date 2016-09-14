@@ -54,8 +54,8 @@ describe('Controller: ProjectCtrl', function () {
         $scope.project = {
             title: "Kwakhona Mahamba is here",
             description: "Kwakhon's test calls",
-            start_date: "2016-05-03",
-            end_date: "2016-03-09",
+            start_date: new Date("2016-05-03"),
+            end_date: new Date("2016-03-09"),
             is_billable: true,
             is_active: true
         };
@@ -82,8 +82,8 @@ describe('Controller: ProjectCtrl', function () {
             pk: 190,
             title: "Kwakhona Mahamba not is here",
             description: "Kwakhona test calls",
-            start_date: "2016-05-03",
-            end_date: "2016-03-09",
+            start_date: new Date("2016-05-03"),
+            end_date: new Date("2016-03-09"),
             is_billable: true,
             is_active: false
         };
@@ -131,8 +131,8 @@ describe('Controller: ProjectCtrl', function () {
             pk: 190,
             title: "Kwakhona Mahamba not is here",
             description: "Kwakhona test calls",
-            start_date: "2016-05-03",
-            end_date: "2016-03-09",
+            start_date: new Date("2016-05-03"),
+            end_date: new Date("2016-03-09"),
             is_billable: true,
             is_active: false
         };
@@ -156,8 +156,8 @@ describe('Controller: ProjectCtrl', function () {
         var _project = {
             title: "Mr Mahamba",
             description: "Mr Mahamba is not just my father",
-            start_date: "2016-05-03",
-            end_date: "2016-03-09",
+            start_date: new Date("2016-05-03"),
+            end_date: new Date("2016-03-09"),
             is_billable: true,
             is_active: true
         };
@@ -169,8 +169,8 @@ describe('Controller: ProjectCtrl', function () {
             pk: 190,
             title: "Mr KR Mahamba",
             description: "Mr Mahamba is not just my father or his brothers and grandfather",
-            start_date: "2016-05-03",
-            end_date: "2016-03-09",
+            start_date: new Date("2016-05-03"),
+            end_date: new Date("2016-03-09"),
             is_billable: true,
             is_active: true
         };
@@ -216,8 +216,8 @@ describe('Controller: ProjectCtrl', function () {
             pk: 15555,
             title: "Kwakhona Mahamba is here",
             description: "Kwakhon's test calls",
-            start_date: "2016-05-03",
-            end_date: "2016-03-09",
+            start_date: new Date("2016-05-03"),
+            end_date: new Date("2016-03-09"),
             is_billable: true,
             is_active: true
         };
@@ -239,8 +239,8 @@ describe('Controller: ProjectCtrl', function () {
         $scope.project = {
             title: "",
             description: "",
-            start_date: "2016-05-03",
-            end_date: "2016-03-09",
+            start_date: new Date("2016-05-03"),
+            end_date: new Date("2016-03-09"),
             is_billable: true,
             is_active: true
         };
@@ -263,8 +263,8 @@ describe('Controller: ProjectCtrl', function () {
         $scope._project = {
             title: "Kwaks",
             description: "Kwask is here too",
-            start_date: "",
-            end_date: "",
+            start_date: new Date(""),
+            end_date: new Date(""),
             is_billable: true,
             is_active: true
         };

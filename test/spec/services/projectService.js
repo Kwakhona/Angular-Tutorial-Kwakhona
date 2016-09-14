@@ -45,23 +45,55 @@ describe('Service: projectService', function () {
         var project = {
             "title": "Kwakhona Mahamba",
             "description": "Kwakhona's Test Project",
-            "start_date": "2001-02-20",
-            "end_date": "2016-02-20",
+            "start_date": new Date("2001-02-20"),
+            "end_date": new Date("2016-02-20"),
             "is_billable": true,
             "is_active": false
         };
-
+        var res;
         service.createProject(project)
             .then(function (response) {
-                expect(response).toBeDefined();
-                expect(response.data.pk).toBe(153);
+                res = response;
             });
 
         httpBackend.flush();
+        expect(res).toBeDefined();
+        expect(res.data.pk).toBe(153);
+    });
+    it('should add a project successfully -- with no end_date', function () {
+        httpBackend.expect('POST', url)
+            .respond(201,
+            {
+                "pk": 153,
+                "title": "Kwakhona Mahamba",
+                "description": "Kwakhona's Test Project",
+                "start_date": "2001-02-20",
+                "end_date": "",
+                "is_billable": true,
+                "is_active": false,
+                "task_set": [],
+                "resource_set": []
+            });
+        var project = {
+            "title": "Kwakhona Mahamba",
+            "description": "Kwakhona's Test Project",
+            "start_date": new Date("2001-02-20"),
+            "is_billable": true,
+            "is_active": false
+        };
+        var res;
+        service.createProject(project)
+            .then(function (response) {
+                res = response;
+            });
+
+        httpBackend.flush();
+        expect(res).toBeDefined();
+        expect(res.data.pk).toBe(153);
     });
 
     it('should update a particular project successfully', function () {
-        httpBackend.expect('PUT', url+ "153/")
+        httpBackend.expect('PUT', url + "153/")
             .respond(200,
             {
                 "pk": 153,
@@ -78,38 +110,40 @@ describe('Service: projectService', function () {
             "pk": 153,
             "title": "Kwakhona Mahamba",
             "description": "Kwakhona's 1st Test Project",
-            "start_date": "2016-09-09",
+            "start_date": new Date("2016-09-09"),
             "is_billable": true,
             "is_active": true
         };
-
+        var res;
         service.updateProject(project.pk, project)
             .then(function (response) {
-                expect(response).toBeDefined();
-                expect(response.data.description).toBe("Kwakhona's 1st Test Project");
+                res = response;
             });
 
         httpBackend.flush();
+        expect(res).toBeDefined();
+        expect(res.data.description).toBe("Kwakhona's 1st Test Project");
     });
 
     it('should delete a particular project successfully', function () {
-        httpBackend.expect('DELETE', url+ "155/")
+        httpBackend.expect('DELETE', url + "155/")
             .respond(204);
-
+        var res;
         service.deleteProject("155")
             .then(function (response) {
-                expect(response).toBeDefined();
-                expect(response.status).toBe(204);
+                res = response;
             });
 
         httpBackend.flush();
+        expect(res).toBeDefined();
+        expect(res.status).toBe(204);
     });
 
-    it('should convert a full text date to this format: YYYY-MM-DD', function(){
+    it('should convert a full text date to this format: YYYY-MM-DD', function () {
         var date = new Date("1990-02-20");
 
         var new_date = service.dateToString(date);
 
-        expect(new_date).toBe("1990-02-20");
+        expect(new_date).toEqual("1990-2-20");
     });
 });
