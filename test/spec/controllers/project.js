@@ -258,7 +258,7 @@ describe('Controller: ProjectCtrl', function () {
 
     });
 
-    it('should handle error on update project failure', function () {
+    it('should return an error on update project failure', function () {
         // error returned when the project the user is trying to update does not exists
         $scope.project = {
             pk: 15555,
@@ -279,7 +279,7 @@ describe('Controller: ProjectCtrl', function () {
 
         expect($scope.error.data).toEqual({ "detail": "Not found." });
     });
-    it('should handle error on add new project failure -- Blank title/description', function () {
+    it('should return an error on add new project failure -- Blank title/description', function () {
         var error;
         // error returned when the project user is trying to add doesn't has a title/description
         $scope.project = {
@@ -294,19 +294,17 @@ describe('Controller: ProjectCtrl', function () {
         httpBackend.when('POST', 'http://projectservice.staging.tangentmicroservices.com/api/v1/projects/')
             .respond(400, { "description": ["This field may not be blank."], "title": ["This field may not be blank."] });
 
-        projectService.createProject($scope.project)
-            .catch(function (err) {
-                error = err;
-            });
+        $scope.addProject();
+
         httpBackend.flush();
 
-        expect(error.status).toBe(400);
-        expect(error.data).toEqual({ "description": ["This field may not be blank."], "title": ["This field may not be blank."] });
+        expect($scope.error.status).toBe(400);
+        expect($scope.error.data).toEqual({ "description": ["This field may not be blank."], "title": ["This field may not be blank."] });
     });
-    it('should handle error on add new project failure -- Wrong Date format', function () {
+    it('should return an error on add new project failure -- Wrong Date format', function () {
         var error;
         // error returned when the project user is trying to add doesn't has a the incorrect format(YYYY-MM-DD) for start_date/end_date
-        $scope._project = {
+        $scope.project = {
             title: "Kwaks",
             description: "Kwask is here too",
             start_date: new Date(""),
@@ -321,14 +319,12 @@ describe('Controller: ProjectCtrl', function () {
                 "end_date": ["Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]]."]
             });
 
-        projectService.createProject($scope._project)
-            .catch(function (err) {
-                error = err;
-            });
+        $scope.addProject();
+
         httpBackend.flush();
 
-        expect(error.status).toBe(400);
-        expect(error.data.start_date[0]).toEqual("Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]].");
-        expect(error.data.end_date[0]).toEqual("Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]].");
+        expect($scope.error.status).toBe(400);
+        expect($scope.error.data.start_date[0]).toEqual("Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]].");
+        expect($scope.error.data.end_date[0]).toEqual("Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]].");
     });
 });
