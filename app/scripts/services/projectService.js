@@ -24,9 +24,8 @@ angular.module('angularTutorialKwakhonaApp')
         projectApi.createProject = function (project) {
             if(angular.isDefined(project.start_date)){
                 project.start_date = projectApi.dateToString(project.start_date);
-            } else {
-                project.start_date = '';
             }
+            
             if(angular.isDefined(project.end_date)){
                 project.end_date = projectApi.dateToString(project.end_date);    
             } else {
