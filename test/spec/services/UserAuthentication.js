@@ -56,7 +56,16 @@ describe('Service: UserAuthentication', function () {
         httpBackend.flush();
     });
 
-    it('should return true when checking if user logged in', function(){
+    it('should logout successfully', function(){
+        // store a token
+        var _token = '71456dbd15de0c0b6d2b4b44e5a92ad94c6def97';
+        authService.storeToken(_token);
+
+        authService.logout();
+        expect(cookie.get('token')).toBeUndefined();
+    });
+
+    it('should return true when user is logged in', function(){
         var token = '71456dbd15de0c0b6d2b4b44e5a92ad94c6def97';
         authService.storeToken(token);
 
@@ -64,8 +73,19 @@ describe('Service: UserAuthentication', function () {
 
         expect(res).toBe(true);
     });
+    it('should return false when user is not logged in', function(){
+        authService.deleteToken();
+
+        var res = authService.isLoggedIn();
+
+        expect(res).toBe(false);
+    });
 
     it('should return a stored token', function () {
+        // store a token
+        var _token = '71456dbd15de0c0b6d2b4b44e5a92ad94c6def97';
+        authService.storeToken(_token);
+        // get a token
         var token = authService.getToken();
 
         expect(token).toBe('71456dbd15de0c0b6d2b4b44e5a92ad94c6def97');
@@ -77,6 +97,10 @@ describe('Service: UserAuthentication', function () {
         expect(cookie.get('token')).toBe('71456dbd15de0c0b6d2b4b44e5a92ad94c6def97');
     });
     it('should remove a token successfully', function () {
+        // store a token
+        var _token = '71456dbd15de0c0b6d2b4b44e5a92ad94c6def97';
+        authService.storeToken(_token);
+        // remove the token
         authService.deleteToken();
 
         expect(cookie.get('token')).toBeUndefined();
