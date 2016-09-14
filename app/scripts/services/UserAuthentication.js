@@ -13,7 +13,7 @@ angular.module('angularTutorialKwakhonaApp')
 
         UserApi.isLoggedIn = function(){
             var token = UserApi.getToken();
-            if(angular.isUndefine(token)){
+            if(angular.isDefined(token)){
                 return true;
             }
             return false;

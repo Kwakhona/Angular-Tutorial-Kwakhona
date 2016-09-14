@@ -56,19 +56,28 @@ describe('Service: UserAuthentication', function () {
         httpBackend.flush();
     });
 
-    it('should check if is logged in by looking for token: isLoggedIn()', function () {
+    it('should return true when checking if user logged in', function(){
+        var token = '71456dbd15de0c0b6d2b4b44e5a92ad94c6def97';
+        authService.storeToken(token);
+
+        var res = authService.isLoggedIn();
+
+        expect(res).toBe(true);
+    });
+
+    it('should return a stored token', function () {
         var token = authService.getToken();
 
         expect(token).toBe('71456dbd15de0c0b6d2b4b44e5a92ad94c6def97');
     });
     it('should store(as a cookie) a token successfully', function () {
         var token = '71456dbd15de0c0b6d2b4b44e5a92ad94c6def97';
-        cookie.put('token', token);
+        authService.storeToken(token);
 
         expect(cookie.get('token')).toBe('71456dbd15de0c0b6d2b4b44e5a92ad94c6def97');
     });
     it('should remove a token successfully', function () {
-        cookie.remove('token');
+        authService.deleteToken();
 
         expect(cookie.get('token')).toBeUndefined();
     });
