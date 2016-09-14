@@ -1,7 +1,7 @@
 // Karma configuration
 // Generated on 2016-03-24
 
-module.exports = function(config) {
+module.exports = function (config) {
   'use strict';
 
   config.set({
@@ -18,7 +18,7 @@ module.exports = function(config) {
     ],
 
     preprocessors: {
-      //'app/scripts/**/*.js': ['coverage']
+      'app/scripts/**/*.js': ['coverage']
     },
 
     // list of files / patterns to load in the browser
@@ -79,15 +79,16 @@ module.exports = function(config) {
     reporters: ['progress', 'coverage'],
 
     coverageReporter: {
-        reporters: [
-            {type: 'lcov', dir: 'coverage/'},
-            {type: 'cobertura', dir: 'coverage/', file: 'cobertura.xml'}
-        ]
+      reporters: [
+        { type: 'lcov', dir: 'coverage/' },
+        { type: 'cobertura', dir: 'coverage/', file: 'cobertura.xml' }
+      ]
     },
     // Uncomment the following lines if you are using grunt's server to run the tests
-    // proxies: {
-    //   '/': 'http://localhost:9000/'
-    // },
+    proxies: {
+      '/': 'http://localhost:9000/',
+      '/views/': '/app/views/'
+    },
     // URL root prevent conflicts with the site root
     // urlRoot: '_karma_'
   });
