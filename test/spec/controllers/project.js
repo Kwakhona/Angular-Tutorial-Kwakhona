@@ -10,16 +10,18 @@ describe('Controller: ProjectCtrl', function () {
         $rootScope,
         projectService,
         httpBackend,
+        cookies,
         url;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, _$rootScope_, _projectService_, _$httpBackend_, _PROJECT_SERVICE_BASE_URI_) {
+    beforeEach(inject(function ($controller, _$rootScope_, _projectService_, _$httpBackend_, _PROJECT_SERVICE_BASE_URI_, _$cookies_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
 
         httpBackend = _$httpBackend_;
         projectService = _projectService_;
-        url = _PROJECT_SERVICE_BASE_URI_;
+        url = _PROJECT_SERVICE_BASE_URI_ + 'projects/';
+        cookies = _$cookies_;
 
 
         ProjectCtrl = $controller('ProjectCtrl', {
@@ -47,16 +49,6 @@ describe('Controller: ProjectCtrl', function () {
                 { "pk": 134, "title": "Test - modify", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "start_date": "2016-05-03", "end_date": "2016-03-09", "is_billable": true, "is_active": true, "task_set": [], "resource_set": [] }
             ]);
     });
-    // it('should return a error on get a list of projects failure', function () {
-
-    //     httpBackend.when('GET', 'http://projectservice.staging.tangentmicroservices.com/api/v1/projects/')
-    //         .respond(403, { 'detail': 'No such user' });
-    //     $scope.init();
-    //     httpBackend.flush();
-
-    //     expect($scope.success).toBe(false);
-    //     expect($scope.error).toBe({ "detail": "No such user" });
-    // });
 
     it('should add a new project successfully', function () {
         $scope.project = {
