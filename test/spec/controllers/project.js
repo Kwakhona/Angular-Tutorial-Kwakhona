@@ -202,11 +202,16 @@ describe('Controller: ProjectCtrl', function () {
         expect($scope.project.is_billable).toBe(false);
     });
 
-    // it('should return true on confirmation', function(){
-    //     spyOn($window, 'confirm').and.returnValue(true);
-    //     expect()
-
-    // });
+    it('should return true on confirmation', function(){
+        spyOn($window, 'confirm').and.returnValue(true);
+        var confirm = $scope.confirm("Mr KR Mahamba");
+        expect(confirm).toBe(true);
+    });
+    it('should return false on confirmation', function(){
+        spyOn($window, 'confirm').and.returnValue(false);
+        var confirm = $scope.confirm("Mr KR Mahamba");
+        expect(confirm).toBe(false);
+    });
 
 
     it('should handle error on delete project failure', function () {
@@ -233,6 +238,31 @@ describe('Controller: ProjectCtrl', function () {
         expect($scope.error.data).toEqual({ "detail": "Not found." });
 
     });
+    it('should return meesage on delete project cancellation by user', function () {
+
+        // error returned when the project the user is trying to delete does not exists
+        httpBackend.when('GET', /^.*/).respond(200, {});
+        httpBackend.when('DELETE', /^.*/)
+            .respond(404, { "detail": "Not found." });
+        var _project = {
+            pk: 190,
+            title: "Mr KR Mahamba",
+            description: "Mr Mahamba is not just my father or his brothers and grandfather",
+            start_date: new Date("2016-05-03"),
+            end_date: new Date("2016-03-09"),
+            is_billable: true,
+            is_active: true
+        };
+
+        spyOn($window, 'confirm').and.returnValue(false);
+        $scope.deleteProject(_project);
+        httpBackend.flush();
+        
+        expect($scope.error).toEqual("You have cancelled the deletion of project: Mr KR Mahamba");
+        // expect($scope.error.data).toEqual({ "detail": "Not found." });
+
+    });
+
     it('should handle error on update project failure', function () {
         var error;
         // error returned when the project the user is trying to update does not exists

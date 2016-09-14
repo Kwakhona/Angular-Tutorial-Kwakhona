@@ -129,7 +129,8 @@ angular.module('angularTutorialKwakhonaApp')
                         $scope.handleError(error);
                     });
             } else {
-                $window.alert("You have cancelled the deletion off project: " + project.title);
+                $scope.error = "You have cancelled the deletion of project: " + project.title;
+                $window.alert($scope.error);
             }
         };
 
