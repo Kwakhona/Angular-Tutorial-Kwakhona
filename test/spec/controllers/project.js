@@ -138,7 +138,7 @@ describe('Controller: ProjectCtrl', function () {
 
     it('should delete a project successfully', function () {
         // project to be deleted
-        $scope.project = {
+        var _project = {
             pk: 190,
             title: "Kwakhona Mahamba not is here",
             description: "Kwakhona test calls",
@@ -152,10 +152,8 @@ describe('Controller: ProjectCtrl', function () {
         httpBackend.when('DELETE', /^.*/)
             .respond(204);
 
-        projectService.deleteProject($scope.project.pk)
-            .then(function (res) {
-                $scope.res = res;
-            });
+        spyOn($scope, 'confirm').and.returnValue(true);
+        $scope.deleteProject(_project);
 
         httpBackend.flush();
 
@@ -214,7 +212,7 @@ describe('Controller: ProjectCtrl', function () {
     });
 
 
-    it('should handle error on delete project failure', function () {
+    it('should return error on delete project failure', function () {
 
         // error returned when the project the user is trying to delete does not exists
         httpBackend.when('GET', /^.*/).respond(200, {});
