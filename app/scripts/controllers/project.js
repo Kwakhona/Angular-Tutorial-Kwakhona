@@ -21,6 +21,7 @@ angular.module('angularTutorialKwakhonaApp')
                 .catch(function (error) {
                     $scope.error = error;
                     $scope.setSuccess(false);
+                    $window.alert("yes an error");
                     if($scope.isDefined(error.detail)){
                         $window.alert(error.detail);
                     }
@@ -29,7 +30,7 @@ angular.module('angularTutorialKwakhonaApp')
         // error handling method
         $scope.handleError = function (error) {
             if ($scope.isDefined(error)) {
-                $window.alert(JSON.stringify(error));
+                $window.alert(error.data);
             }
         };
         // verify value is defined
@@ -90,6 +91,7 @@ angular.module('angularTutorialKwakhonaApp')
                     $scope.init();
                 })
                 .catch(function (error) {
+                    $scope.error = error;
                     $scope.setSuccess(false);
                     $scope.handleError(error);
                 });
@@ -106,6 +108,7 @@ angular.module('angularTutorialKwakhonaApp')
                     $scope.init();
                 })
                 .catch(function (error) {
+                    $scope.error = error;
                     $scope.setSuccess(false);
                     $scope.handleError(error);
                 });
@@ -121,11 +124,13 @@ angular.module('angularTutorialKwakhonaApp')
                         $scope.init();
                     })
                     .catch(function (error) {
+                        $scope.error = error;
                         $scope.setSuccess(false);
                         $scope.handleError(error);
                     });
             } else {
-                $window.alert("You have cancelled the deletion off project: " + project.title);
+                $scope.error = "You have cancelled the deletion of project: " + project.title;
+                $window.alert($scope.error);
             }
         };
 
