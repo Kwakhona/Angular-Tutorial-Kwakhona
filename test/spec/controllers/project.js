@@ -238,7 +238,7 @@ describe('Controller: ProjectCtrl', function () {
         expect($scope.error.data).toEqual({ "detail": "Not found." });
 
     });
-    it('should return meesage on delete project cancellation by user', function () {
+    it('should return message on delete project cancellation by user', function () {
 
         // error returned when the project the user is trying to delete does not exists
         httpBackend.when('GET', /^.*/).respond(200, {});
