@@ -15,9 +15,7 @@ angular.module('angularTutorialKwakhonaApp')
 
         // get all Projects
         projectApi.getProjects = function () {
-            if (angular.isDefined(data.projectId)) {
-                data.projectId = '';
-            }
+            data = {};
             return httpHelpers.get(url, data);
         };
         // create a new Project
@@ -56,7 +54,6 @@ angular.module('angularTutorialKwakhonaApp')
         // convert a lond date to string
         projectApi.dateToString = function (date) {
             var day, month, year;
-            // Mon Sep 12 2016 00:00:00 GMT+0200 (South Africa Standard Time)
             day = date.getDate();
             month = date.getMonth() + 1;
             year = date.getFullYear();
