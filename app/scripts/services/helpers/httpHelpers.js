@@ -19,11 +19,7 @@ angular.module('angularTutorialKwakhonaApp')
         httpHelper.get = function (url, data) {
             url = httpHelper.extractID(url, data);
 
-            return $http({
-                method: 'GET',
-                url: url,
-                headers: headers
-            });
+            return httpHelper.returnHTTP(url, 'GET'); 
         };
         // create method
         httpHelper.create = function (url, data) {
@@ -51,11 +47,7 @@ angular.module('angularTutorialKwakhonaApp')
         httpHelper.remove = function(url, data) {
             url = httpHelper.extractID(url, data);
 
-            return $http({
-                method: 'DELETE',
-                url: url,
-                headers: headers
-            });
+            return httpHelper.returnHTTP(url, 'DELETE'); 
         };
 
         // determine whether projectId is undefined and extract projectID if it is
@@ -66,6 +58,15 @@ angular.module('angularTutorialKwakhonaApp')
                 return url;
             }
             return url;
+        };
+        // return a HTTP promise when method is called
+        httpHelper.returnHTTP = function(url, method){
+
+            return $http({
+                method: method,
+                url: url,
+                headers: headers
+            });
         };
         
 

@@ -265,7 +265,7 @@ describe('Controller: ProjectCtrl', function () {
         httpBackend.flush();
 
         expect($scope.error.status).toBe(404);
-        expect($scope.error.data).toEqual({ "detail": "Not found." });
+        expect($scope.error.data.detail).toBe("Not found.");
 
     });
     it('should return message on delete project cancellation by user', function () {
@@ -289,8 +289,6 @@ describe('Controller: ProjectCtrl', function () {
         httpBackend.flush();
 
         expect($scope.error).toEqual("You have cancelled the deletion of project: Mr KR Mahamba");
-        // expect($scope.error.data).toEqual({ "detail": "Not found." });
-
     });
 
     it('should return an error on update project failure', function () {
@@ -312,10 +310,9 @@ describe('Controller: ProjectCtrl', function () {
 
         httpBackend.flush();
 
-        expect($scope.error.data).toEqual({ "detail": "Not found." });
+        expect($scope.error.data.detail).toBe("Not found.");
     });
     it('should return an error on add new project failure -- Blank title/description', function () {
-        var error;
         // error returned when the project user is trying to add doesn't has a title/description
         $scope.project = {
             title: "",
@@ -334,10 +331,10 @@ describe('Controller: ProjectCtrl', function () {
         httpBackend.flush();
 
         expect($scope.error.status).toBe(400);
-        expect($scope.error.data).toEqual({ "description": ["This field may not be blank."], "title": ["This field may not be blank."] });
+        expect($scope.error.data.description[0]).toEqual("This field may not be blank.");
+        expect($scope.error.data.title[0]).toEqual("This field may not be blank.");
     });
     it('should return an error on add new project failure -- Wrong Date format', function () {
-        var error;
         // error returned when the project user is trying to add doesn't has a the incorrect format(YYYY-MM-DD) for start_date/end_date
         $scope.project = {
             title: "Kwaks",
@@ -361,5 +358,27 @@ describe('Controller: ProjectCtrl', function () {
         expect($scope.error.status).toBe(400);
         expect($scope.error.data.start_date[0]).toEqual("Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]].");
         expect($scope.error.data.end_date[0]).toEqual("Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]].");
+    });
+
+    it('should handle a HTPP 403 error effectively', function(){
+        var _error = {
+            "data":{"detail":"No such user"},
+            "status":403,
+            "config":{
+                "method":"GET",
+                "transformRequest":[null],
+                "transformResponse":[null],
+                "url":"http://projectservice.staging.tangentmicroservices.com/api/v1/projects/",
+                "headers":{
+                    "Authorization":"71456dbd15de0c0b6d2b4b44e5a92ad94c6def",
+                    "Accept":"application/json, text/plain, */*"
+                }
+            },
+            "statusText":""
+        };
+        spyOn($window, 'alert');
+        $scope.handleError(_error);
+
+        expect($window.alert).toHaveBeenCalledWith('No such user');
     });
 });
