@@ -86,7 +86,6 @@ describe('Controller: ProjectCtrl', function () {
             { "pk": 190, "title": "Kwakhona Mahamba is here", "description": "Kwakhon's test calls", "start_date": "2016-05-03", "end_date": "2016-03-09", "is_billable": true, "is_active": true, "task_set": [], "resource_set": [] }
         );
     });
-
     it('should updated a project successfully', function () {
         // updated project
         $scope.project = {
@@ -135,10 +134,9 @@ describe('Controller: ProjectCtrl', function () {
             }
         );
     });
-
     it('should delete a project successfully', function () {
         // project to be deleted
-        $scope.project = {
+        var _project = {
             pk: 190,
             title: "Kwakhona Mahamba not is here",
             description: "Kwakhona test calls",
@@ -152,10 +150,8 @@ describe('Controller: ProjectCtrl', function () {
         httpBackend.when('DELETE', /^.*/)
             .respond(204);
 
-        projectService.deleteProject($scope.project.pk)
-            .then(function (res) {
-                $scope.res = res;
-            });
+        spyOn($scope, 'confirm').and.returnValue(true);
+        $scope.deleteProject(_project);
 
         httpBackend.flush();
 
@@ -213,8 +209,7 @@ describe('Controller: ProjectCtrl', function () {
         expect(confirm).toBe(false);
     });
 
-
-    it('should handle error on delete project failure', function () {
+    it('should return error on delete project failure', function () {
 
         // error returned when the project the user is trying to delete does not exists
         httpBackend.when('GET', /^.*/).respond(200, {});
@@ -238,7 +233,7 @@ describe('Controller: ProjectCtrl', function () {
         expect($scope.error.data).toEqual({ "detail": "Not found." });
 
     });
-    it('should return meesage on delete project cancellation by user', function () {
+    it('should return message on delete project cancellation by user', function () {
 
         // error returned when the project the user is trying to delete does not exists
         httpBackend.when('GET', /^.*/).respond(200, {});
@@ -263,8 +258,7 @@ describe('Controller: ProjectCtrl', function () {
 
     });
 
-    it('should handle error on update project failure', function () {
-        var error;
+    it('should return an error on update project failure', function () {
         // error returned when the project the user is trying to update does not exists
         $scope.project = {
             pk: 15555,
@@ -279,15 +273,13 @@ describe('Controller: ProjectCtrl', function () {
         httpBackend.when('PUT', /^.*/)
             .respond(404, { "detail": "Not found." });
 
-        projectService.updateProject($scope.project.pk, $scope.project)
-            .catch(function (err) {
-                error = err;
-            });
+        $scope.updateProject();
+
         httpBackend.flush();
 
-        expect(error.data).toEqual({ "detail": "Not found." });
+        expect($scope.error.data).toEqual({ "detail": "Not found." });
     });
-    it('should handle error on add new project failure -- Blank title/description', function () {
+    it('should return an error on add new project failure -- Blank title/description', function () {
         var error;
         // error returned when the project user is trying to add doesn't has a title/description
         $scope.project = {
@@ -302,19 +294,17 @@ describe('Controller: ProjectCtrl', function () {
         httpBackend.when('POST', 'http://projectservice.staging.tangentmicroservices.com/api/v1/projects/')
             .respond(400, { "description": ["This field may not be blank."], "title": ["This field may not be blank."] });
 
-        projectService.createProject($scope.project)
-            .catch(function (err) {
-                error = err;
-            });
+        $scope.addProject();
+
         httpBackend.flush();
 
-        expect(error.status).toBe(400);
-        expect(error.data).toEqual({ "description": ["This field may not be blank."], "title": ["This field may not be blank."] });
+        expect($scope.error.status).toBe(400);
+        expect($scope.error.data).toEqual({ "description": ["This field may not be blank."], "title": ["This field may not be blank."] });
     });
-    it('should handle error on add new project failure -- Wrong Date format', function () {
+    it('should return an error on add new project failure -- Wrong Date format', function () {
         var error;
         // error returned when the project user is trying to add doesn't has a the incorrect format(YYYY-MM-DD) for start_date/end_date
-        $scope._project = {
+        $scope.project = {
             title: "Kwaks",
             description: "Kwask is here too",
             start_date: new Date(""),
@@ -329,14 +319,12 @@ describe('Controller: ProjectCtrl', function () {
                 "end_date": ["Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]]."]
             });
 
-        projectService.createProject($scope._project)
-            .catch(function (err) {
-                error = err;
-            });
+        $scope.addProject();
+
         httpBackend.flush();
 
-        expect(error.status).toBe(400);
-        expect(error.data.start_date[0]).toEqual("Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]].");
-        expect(error.data.end_date[0]).toEqual("Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]].");
+        expect($scope.error.status).toBe(400);
+        expect($scope.error.data.start_date[0]).toEqual("Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]].");
+        expect($scope.error.data.end_date[0]).toEqual("Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]].");
     });
 });

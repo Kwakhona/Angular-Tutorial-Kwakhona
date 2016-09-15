@@ -40,7 +40,7 @@ angular.module('angularTutorialKwakhonaApp')
             }
             return false;
         };
-        // set $scope.succes to true
+        // set $scope.success
         $scope.setSuccess = function(value){
             $scope.success = value;
         };
