@@ -15,7 +15,8 @@ angular.module('angularTutorialKwakhonaApp')
             $scope.success = false;
             projectService.getProjects()
                 .then(function (response) {
-                    $scope.handleResponse(response);
+                    $scope.setSuccess(true);
+                    $scope.projects = response.data;
                 })
                 .catch(function (error) {
                     $scope.handleError(error);
@@ -25,9 +26,6 @@ angular.module('angularTutorialKwakhonaApp')
         $scope.handleResponse = function (response) {
             $scope.res = response;
             $scope.setSuccess(true);
-            if (angular.isArray(response.data)) {
-                $scope.projects = response.data;
-            }
             $scope.init();
         };
 
@@ -137,7 +135,6 @@ angular.module('angularTutorialKwakhonaApp')
                 projectService.deleteProject(project.pk)
                     .then(function (response) {
                         $scope.handleResponse(response);
-                        $scope.init();
                     })
                     .catch(function (error) {
                         $scope.handleError(error);
