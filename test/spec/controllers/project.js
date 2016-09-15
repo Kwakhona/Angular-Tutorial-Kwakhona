@@ -74,16 +74,37 @@ describe('Controller: ProjectCtrl', function () {
             is_billable: true,
             is_active: true
         };
-        httpBackend.when('GET', /^.*/).respond(200, {});
-        httpBackend.when('POST', /^.*/)
+        httpBackend.when('GET', url).respond(200,
+                { 
+                    "pk": 190, 
+                    "title": "Kwakhona Mahamba is here", 
+                    "description": "Kwakhon's test calls", 
+                    "start_date": "2016-05-03", 
+                    "end_date": "2016-03-09", 
+                    "is_billable": true, 
+                    "is_active": true,
+                    "task_set": [], 
+                    "resource_set": [] 
+                });
+        httpBackend.when('POST', url)
             .respond(200,
-            { "pk": 190, "title": "Kwakhona Mahamba is here", "description": "Kwakhon's test calls", "start_date": "2016-05-03", "end_date": "2016-03-09", "is_billable": true, "is_active": true, "task_set": [], "resource_set": [] }
+                { 
+                    "pk": 190, 
+                    "title": "Kwakhona Mahamba is here", 
+                    "description": "Kwakhon's test calls", 
+                    "start_date": "2016-05-03", 
+                    "end_date": "2016-03-09", 
+                    "is_billable": true, 
+                    "is_active": true,
+                    "task_set": [], 
+                    "resource_set": [] 
+                }
             );
 
         $scope.addProject($scope.project);
 
         httpBackend.flush();
-
+        
         expect($scope.success).toBe(true);
         expect($scope.form.added).toBe(true);
         expect($scope.res.data).toEqual(
@@ -102,7 +123,18 @@ describe('Controller: ProjectCtrl', function () {
             is_active: false
         };
 
-        httpBackend.when('GET', /^.*/).respond(200, {});
+        httpBackend.when('GET', /^.*/).respond(200,
+            {
+                "pk": 190,
+                "title": "Kwakhona Mahamba is not here",
+                "description": "Kwakhona test calls",
+                "start_date": "2016-05-03",
+                "end_date": "2016-03-09",
+                "is_billable": true,
+                "is_active": false,
+                "task_set": [],
+                "resource_set": []
+            });
         httpBackend.when('PUT', /^.*/)
             .respond(200,
             {
@@ -115,8 +147,7 @@ describe('Controller: ProjectCtrl', function () {
                 "is_active": false,
                 "task_set": [],
                 "resource_set": []
-            }
-            );
+            });
 
         $scope.updateProject($scope.project.pk, $scope.project);
 
@@ -150,7 +181,7 @@ describe('Controller: ProjectCtrl', function () {
             is_active: false
         };
 
-        httpBackend.when('GET', /^.*/).respond(200, {});
+        httpBackend.when('GET', /^.*/).respond(204, {});
         httpBackend.when('DELETE', /^.*/)
             .respond(204);
 
