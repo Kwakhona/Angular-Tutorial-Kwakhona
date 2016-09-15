@@ -9,28 +9,36 @@
  */
 angular.module('angularTutorialKwakhonaApp')
     .controller('ProjectCtrl', function ($scope, $window, $route, projectService) {
-        
+
         // get all projects
         $scope.init = function () {
             $scope.success = false;
             projectService.getProjects()
                 .then(function (response) {
-                    $scope.setSuccess(true);
-                    $scope.projects = response.data;
+                    $scope.handleResponse(response)
                 })
                 .catch(function (error) {
-                    $scope.error = error;
-                    $scope.setSuccess(false);
-                    $window.alert("yes an error");
-                    if($scope.isDefined(error.detail)){
-                        $window.alert(error.detail);
-                    }
+                    $scope.handleError(error);
                 });
         };
+        // response handling method
+        $scope.handleResponse = function (response) {
+            $scope.res = response;
+            $scope.setSuccess(true);
+            if (angular.isArray(response.data)) {
+                $scope.projects = response.data;
+            }
+        };
+
         // error handling method
         $scope.handleError = function (error) {
+            $scope.error = error;
+            $scope.setSuccess(false);
             if ($scope.isDefined(error)) {
                 $window.alert(error.data);
+            }
+            if ($scope.isDefined(error.detail)) {
+                $window.alert(error.detail);
             }
         };
         // verify value is defined
@@ -41,12 +49,12 @@ angular.module('angularTutorialKwakhonaApp')
             return false;
         };
         // set $scope.success
-        $scope.setSuccess = function(value){
+        $scope.setSuccess = function (value) {
             $scope.success = value;
         };
         // confirm alert 
-        $scope.confirm = function(title){
-            if($window.confirm("Are you sure you want to delete project: " + title) === true){
+        $scope.confirm = function (title) {
+            if ($window.confirm("Are you sure you want to delete project: " + title) === true) {
                 return true;
             }
             return false;
@@ -85,14 +93,11 @@ angular.module('angularTutorialKwakhonaApp')
 
             projectService.createProject($scope.project)
                 .then(function (response) {
-                    $scope.res = response;
-                    $scope.setSuccess(true);
+                    $scope.handleResponse(response);
                     $scope.form = { 'added': true };
                     $scope.init();
                 })
                 .catch(function (error) {
-                    $scope.error = error;
-                    $scope.setSuccess(false);
                     $scope.handleError(error);
                 });
         };
@@ -102,14 +107,11 @@ angular.module('angularTutorialKwakhonaApp')
 
             projectService.updateProject($scope.project.pk, $scope.project)
                 .then(function (response) {
-                    $scope.res = response;
-                    $scope.setSuccess(true);
+                    $scope.handleResponse(response);
                     $scope.form = { 'edited': true };
                     $scope.init();
                 })
                 .catch(function (error) {
-                    $scope.error = error;
-                    $scope.setSuccess(false);
                     $scope.handleError(error);
                 });
         };
@@ -119,13 +121,10 @@ angular.module('angularTutorialKwakhonaApp')
             if ($scope.confirm(project.title)) {
                 projectService.deleteProject(project.pk)
                     .then(function (response) {
-                        $scope.res = response;
-                        $scope.setSuccess(true);
+                        $scope.handleResponse(response);
                         $scope.init();
                     })
                     .catch(function (error) {
-                        $scope.error = error;
-                        $scope.setSuccess(false);
                         $scope.handleError(error);
                     });
             } else {

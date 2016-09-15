@@ -21,8 +21,11 @@ describe('Controller: ProjectCtrl', function () {
 
         httpBackend = _$httpBackend_;
         projectService = _projectService_;
-        url = _PROJECT_SERVICE_BASE_URI_ + 'projects/';
         
+        url = _PROJECT_SERVICE_BASE_URI_ + 'projects/';
+
+        httpBackend.when('GET', 'views/main.html')
+            .respond(200);
 
         ProjectCtrl = $controller('ProjectCtrl', {
             $scope: $scope, projectService: projectService, $window: $window
@@ -49,17 +52,18 @@ describe('Controller: ProjectCtrl', function () {
                 { "pk": 134, "title": "Test - modify", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "start_date": "2016-05-03", "end_date": "2016-03-09", "is_billable": true, "is_active": true, "task_set": [], "resource_set": [] }
             ]);
     });
-    // it('should return an error on getProjects failure', function () {
-    //     httpBackend.when('GET', /^.*/)
-    //         .respond(403, {});
-        
-    //     $scope.init();
-        
-    //     httpBackend.flush();
-    //     console.log(angular.mock.dump($scope));
-    //     // expect($scope.success).toBe(false);
-    //     // expect($scope.error.status).toBe(403);
-    // });
+    it('should return an error on getProjects failure', function () {
+
+        httpBackend.when('GET', url)
+            .respond(403, { "detail": "No such user" });
+
+        $scope.init();
+
+        httpBackend.flush();
+
+        expect($scope.success).toBe(false);
+        expect($scope.error.status).toBe(403);
+    });
 
     it('should add a new project successfully', function () {
         $scope.project = {
@@ -70,16 +74,37 @@ describe('Controller: ProjectCtrl', function () {
             is_billable: true,
             is_active: true
         };
-        httpBackend.when('GET', /^.*/).respond(200, {});
-        httpBackend.when('POST', /^.*/)
+        httpBackend.when('GET', url).respond(200,
+                { 
+                    "pk": 190, 
+                    "title": "Kwakhona Mahamba is here", 
+                    "description": "Kwakhon's test calls", 
+                    "start_date": "2016-05-03", 
+                    "end_date": "2016-03-09", 
+                    "is_billable": true, 
+                    "is_active": true,
+                    "task_set": [], 
+                    "resource_set": [] 
+                });
+        httpBackend.when('POST', url)
             .respond(200,
-            { "pk": 190, "title": "Kwakhona Mahamba is here", "description": "Kwakhon's test calls", "start_date": "2016-05-03", "end_date": "2016-03-09", "is_billable": true, "is_active": true, "task_set": [], "resource_set": [] }
+                { 
+                    "pk": 190, 
+                    "title": "Kwakhona Mahamba is here", 
+                    "description": "Kwakhon's test calls", 
+                    "start_date": "2016-05-03", 
+                    "end_date": "2016-03-09", 
+                    "is_billable": true, 
+                    "is_active": true,
+                    "task_set": [], 
+                    "resource_set": [] 
+                }
             );
 
         $scope.addProject($scope.project);
 
         httpBackend.flush();
-
+        
         expect($scope.success).toBe(true);
         expect($scope.form.added).toBe(true);
         expect($scope.res.data).toEqual(
@@ -98,7 +123,18 @@ describe('Controller: ProjectCtrl', function () {
             is_active: false
         };
 
-        httpBackend.when('GET', /^.*/).respond(200, {});
+        httpBackend.when('GET', /^.*/).respond(200,
+            {
+                "pk": 190,
+                "title": "Kwakhona Mahamba is not here",
+                "description": "Kwakhona test calls",
+                "start_date": "2016-05-03",
+                "end_date": "2016-03-09",
+                "is_billable": true,
+                "is_active": false,
+                "task_set": [],
+                "resource_set": []
+            });
         httpBackend.when('PUT', /^.*/)
             .respond(200,
             {
@@ -111,8 +147,7 @@ describe('Controller: ProjectCtrl', function () {
                 "is_active": false,
                 "task_set": [],
                 "resource_set": []
-            }
-            );
+            });
 
         $scope.updateProject($scope.project.pk, $scope.project);
 
@@ -146,7 +181,7 @@ describe('Controller: ProjectCtrl', function () {
             is_active: false
         };
 
-        httpBackend.when('GET', /^.*/).respond(200, {});
+        httpBackend.when('GET', /^.*/).respond(204, {});
         httpBackend.when('DELETE', /^.*/)
             .respond(204);
 
@@ -198,12 +233,12 @@ describe('Controller: ProjectCtrl', function () {
         expect($scope.project.is_billable).toBe(false);
     });
 
-    it('should return true on confirmation', function(){
+    it('should return true on confirmation', function () {
         spyOn($window, 'confirm').and.returnValue(true);
         var confirm = $scope.confirm("Mr KR Mahamba");
         expect(confirm).toBe(true);
     });
-    it('should return false on confirmation', function(){
+    it('should return false on confirmation', function () {
         spyOn($window, 'confirm').and.returnValue(false);
         var confirm = $scope.confirm("Mr KR Mahamba");
         expect(confirm).toBe(false);
@@ -228,7 +263,7 @@ describe('Controller: ProjectCtrl', function () {
         spyOn($window, 'confirm').and.returnValue(true);
         $scope.deleteProject(_project);
         httpBackend.flush();
-        
+
         expect($scope.error.status).toBe(404);
         expect($scope.error.data).toEqual({ "detail": "Not found." });
 
@@ -252,7 +287,7 @@ describe('Controller: ProjectCtrl', function () {
         spyOn($window, 'confirm').and.returnValue(false);
         $scope.deleteProject(_project);
         httpBackend.flush();
-        
+
         expect($scope.error).toEqual("You have cancelled the deletion of project: Mr KR Mahamba");
         // expect($scope.error.data).toEqual({ "detail": "Not found." });
 
