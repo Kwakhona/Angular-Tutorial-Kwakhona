@@ -33,27 +33,26 @@ angular.module('angularTutorialKwakhonaApp')
         $scope.handleError = function (error) {
             $scope.error = error;
             $scope.setSuccess(false);
-            if ($scope.isDefined(error.data)) {
-                var _error = '';
-                if ($scope.isDefined(error.data.title)) {
-                    _error += 'Title: ' + error.data.title[0] + "\n";
-                }
-                if ($scope.isDefined(error.data.description)) {
-                    _error += 'Description: ' + error.data.description[0] + "\n";
-                }
-                if ($scope.isDefined(error.data.start_date)) {
-                    _error += 'Start Date: ' + error.data.start_date[0] + "\n";
-                }
-                if ($scope.isDefined(error.data.end_date)) {
-                    _error += 'End Date: ' + error.data.end_date[0] + "\n";
-                }
 
-                if (_error !== '') {
-                    $window.alert(_error);
-                }
-                if ($scope.isDefined(error.data.detail)) {
-                    $window.alert(error.data.detail);
-                }
+            var _error = '';
+            if ($scope.isDefined(error.data.title)) {
+                _error += 'Title: ' + error.data.title[0] + "\n";
+            }
+            if ($scope.isDefined(error.data.description)) {
+                _error += 'Description: ' + error.data.description[0] + "\n";
+            }
+            if ($scope.isDefined(error.data.start_date)) {
+                _error += 'Start Date: ' + error.data.start_date[0] + "\n";
+            }
+            if ($scope.isDefined(error.data.end_date)) {
+                _error += 'End Date: ' + error.data.end_date[0] + "\n";
+            }
+            
+            if (_error !== '') {
+                $window.alert(_error);
+            }
+            if ($scope.isDefined(error.data.detail)) {
+                $window.alert(error.data.detail);
             }
         };
         // verify value is defined
