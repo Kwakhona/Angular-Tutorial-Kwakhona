@@ -15,7 +15,8 @@ angular.module('angularTutorialKwakhonaApp')
             $scope.success = false;
             projectService.getProjects()
                 .then(function (response) {
-                    $scope.handleResponse(response);
+                    $scope.setSuccess(true);
+                    $scope.projects = response.data;
                 })
                 .catch(function (error) {
                     $scope.handleError(error);
@@ -25,9 +26,7 @@ angular.module('angularTutorialKwakhonaApp')
         $scope.handleResponse = function (response) {
             $scope.res = response;
             $scope.setSuccess(true);
-            if (angular.isArray(response.data)) {
-                $scope.projects = response.data;
-            }
+            $scope.init();
         };
 
         // error handling method
@@ -36,20 +35,20 @@ angular.module('angularTutorialKwakhonaApp')
             $scope.setSuccess(false);
             if ($scope.isDefined(error.data)) {
                 var _error = '';
-                if($scope.isDefined(error.data.title)){
-                    _error += 'Title: '+ error.data.title[0] + "\n";
+                if ($scope.isDefined(error.data.title)) {
+                    _error += 'Title: ' + error.data.title[0] + "\n";
                 }
-                if($scope.isDefined(error.data.description)){
-                    _error += 'Description: '+ error.data.description[0] + "\n";
+                if ($scope.isDefined(error.data.description)) {
+                    _error += 'Description: ' + error.data.description[0] + "\n";
                 }
-                if($scope.isDefined(error.data.start_date)){
-                    _error += 'Start Date: '+ error.data.start_date[0] + "\n";
+                if ($scope.isDefined(error.data.start_date)) {
+                    _error += 'Start Date: ' + error.data.start_date[0] + "\n";
                 }
-                if($scope.isDefined(error.data.end_date)){
-                    _error += 'End Date: '+ error.data.end_date[0] + "\n";
+                if ($scope.isDefined(error.data.end_date)) {
+                    _error += 'End Date: ' + error.data.end_date[0] + "\n";
                 }
 
-                if(_error !== ''){
+                if (_error !== '') {
                     $window.alert(_error);
                 }
                 if ($scope.isDefined(error.data.detail)) {
@@ -109,9 +108,8 @@ angular.module('angularTutorialKwakhonaApp')
 
             projectService.createProject($scope.project)
                 .then(function (response) {
-                    $scope.handleResponse(response);
                     $scope.form = { 'added': true };
-                    $scope.init();
+                    $scope.handleResponse(response);
                 })
                 .catch(function (error) {
                     $scope.handleError(error);
@@ -123,9 +121,8 @@ angular.module('angularTutorialKwakhonaApp')
 
             projectService.updateProject($scope.project.pk, $scope.project)
                 .then(function (response) {
-                    $scope.handleResponse(response);
                     $scope.form = { 'edited': true };
-                    $scope.init();
+                    $scope.handleResponse(response);
                 })
                 .catch(function (error) {
                     $scope.handleError(error);
@@ -138,7 +135,6 @@ angular.module('angularTutorialKwakhonaApp')
                 projectService.deleteProject(project.pk)
                     .then(function (response) {
                         $scope.handleResponse(response);
-                        $scope.init();
                     })
                     .catch(function (error) {
                         $scope.handleError(error);
