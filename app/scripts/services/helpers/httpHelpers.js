@@ -14,13 +14,7 @@ angular.module('angularTutorialKwakhonaApp')
             'Content-Type': 'application/json',
             'Authorization': UserAuthentication.getToken()
         };
-
-        // get method
-        httpHelper.get = function (url, data) {
-            url = httpHelper.extractID(url, data);
-
-            return httpHelper.returnHTTP(url, 'GET'); 
-        };
+        
         // create method
         httpHelper.create = function (url, data) {
             return $http({
@@ -29,6 +23,12 @@ angular.module('angularTutorialKwakhonaApp')
                 data: data,
                 headers: headers
             });
+        };
+        // get method
+        httpHelper.get = function (url, data) {
+            url = httpHelper.extractID(url, data);
+
+            return httpHelper.returnHTTP(url, 'GET'); 
         };
         // put method
         httpHelper.update = function(url, data) {
