@@ -115,4 +115,16 @@ describe('Service: httpHelpers', function () {
 
         expect(_newURL).toBe('http://projectservice.staging.tangentmicroservices.com/api/v1/projects/155/');
     });
+
+    it('should return a http promise when returnHTTP method is called', function(){
+        // GET promise
+        var _url = 'http://projectservice.staging.tangentmicroservices.com/api/v1/projects/';
+        var _http = service.returnHTTP(_url, 'GET');
+        expect(_http.$$state).toEqual({ status: 0 });
+
+        // DELETE promise
+        var _url = 'http://projectservice.staging.tangentmicroservices.com/api/v1/projects/155/';
+        var _http = service.returnHTTP(_url, 'DELETE');
+        expect(_http.$$state).toEqual({ status: 0 });
+    });
 });
