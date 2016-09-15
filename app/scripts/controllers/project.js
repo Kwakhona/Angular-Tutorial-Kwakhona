@@ -21,7 +21,6 @@ angular.module('angularTutorialKwakhonaApp')
                 .catch(function (error) {
                     $scope.error = error;
                     $scope.setSuccess(false);
-                    $window.alert("yes an error");
                     if($scope.isDefined(error.detail)){
                         $window.alert(error.detail);
                     }
