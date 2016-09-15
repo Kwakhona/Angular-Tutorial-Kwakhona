@@ -360,8 +360,11 @@ describe('Controller: ProjectCtrl', function () {
         expect($scope.error.data.end_date[0]).toEqual("Date has wrong format. Use one of these formats instead: YYYY[-MM[-DD]].");
     });
 
-    it('should handle a HTPP 403 error effectively', function(){
-        var _error = {
+    it('should handle errors effectively', function(){
+        var _error = {};
+        spyOn($window, 'alert');
+        // HTTP GET 403 - No such user
+        _error = {
             "data":{"detail":"No such user"},
             "status":403,
             "config":{
@@ -376,9 +379,43 @@ describe('Controller: ProjectCtrl', function () {
             },
             "statusText":""
         };
-        spyOn($window, 'alert');
         $scope.handleError(_error);
-
         expect($window.alert).toHaveBeenCalledWith('No such user');
+        // HTTP DELETE 404 - Not found
+        _error = {
+            "data":{"detail":"Not found."},
+            "status":404,
+            "config":{
+                "method":"DELETE",
+                "transformRequest":[null],
+                "transformResponse":[null],
+                "url":"http://projectservice.staging.tangentmicroservices.com/api/v1/projects/1550/",
+                "headers":{
+                    "Authorization":"71456dbd15de0c0b6d2b4b44e5a92ad94c6def",
+                    "Accept":"application/json, text/plain, */*"
+                }
+            },
+            "statusText":""
+        };
+        $scope.handleError(_error);
+        expect($window.alert).toHaveBeenCalledWith('Not found.');
+        // HTTP PUT 404 - Not found
+        _error = {
+            "data":{"detail":"Not found."},
+            "status":404,
+            "config":{
+                "method":"PUT",
+                "transformRequest":[null],
+                "transformResponse":[null],
+                "url":"http://projectservice.staging.tangentmicroservices.com/api/v1/projects/1550/",
+                "headers":{
+                    "Authorization":"71456dbd15de0c0b6d2b4b44e5a92ad94c6def",
+                    "Accept":"application/json, text/plain, */*"
+                }
+            },
+            "statusText":""
+        };
+        $scope.handleError(_error);
+        expect($window.alert).toHaveBeenCalledWith('Not found.');
     });
 });
