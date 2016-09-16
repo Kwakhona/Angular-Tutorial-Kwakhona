@@ -10,6 +10,8 @@ engines:
       - javascript
   eslint:
     enabled: true
+    exclude_fingerprints:
+    - a6cd27323a2db4078c387932a4222b79
   fixme:
     enabled: true
 ratings:
