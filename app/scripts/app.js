@@ -41,4 +41,20 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+  })
+
+  // a controller for the Menu
+  .controller('menuCtrl', function ($scope, UserAuthentication, $location, $window) {
+    // check if loggeIn every second
+    if (UserAuthentication.isLoggedIn() === true) {
+      $scope.loggedIn = true;
+    } else {
+      $scope.loggedIn = false;
+    }
+
+    $scope.Logout = function () {
+      UserAuthentication.logout();
+      $location.path('/');
+      $window.location.reload();
+    };
   });
