@@ -5,6 +5,7 @@ engines:
     enabled: true
     exclude_fingerprints:
     - 825a03cfc7b3888dbf573322a9a15138
+    - 1261da2fbcf2c1eba1a3abf10d694b58
     config:
       languages:
       - javascript
