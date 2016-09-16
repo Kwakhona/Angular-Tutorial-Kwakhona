@@ -17,11 +17,15 @@ This is an Angular 1.3 application that has been Tangentified.
 # Setup application
 1. Create a folder where the application will been and `cd` into it 
 
-`mkdir AngularApp && cd AngularApp`
+    ```
+    mkdir AngularApp && cd AngularApp
+    ```
 
 2. Clone the repository
 
-`git clone https://github.com/Kwakhona/Angular-Tutorial-Kwakhona.git`
+    ```
+    git clone https://github.com/Kwakhona/Angular-Tutorial-Kwakhona.git
+    ```
 
 # Install Dependecies
 Run `npm install && bower install`
