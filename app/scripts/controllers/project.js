@@ -33,6 +33,19 @@ angular.module('angularTutorialKwakhonaApp')
         $scope.handleError = function (error) {
             $scope.error = error;
             $scope.setSuccess(false);
+            var _error = '';
+            if ($scope.isDefined(error.data.title)) {
+                _error += error.data.title[0];
+            }
+            if ($scope.isDefined(error.data.description)) {
+                _error += error.data.description[0];
+            }
+            if ($scope.isDefined(error.data.start_date)) {
+                _error += error.data.start_date[0];
+            }
+            if ($scope.isDefined(error.data.end_date)) {
+                _error += error.data.end_date[0];
+            }
 
             if ($scope.isDefined(error.data.detail)) {
                 $window.alert(error.data.detail);
