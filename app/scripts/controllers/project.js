@@ -46,6 +46,9 @@ angular.module('angularTutorialKwakhonaApp')
             if ($scope.isDefined(error.data.end_date)) {
                 _error += error.data.end_date[0];
             }
+            if(_error !== ''){
+                $window.alert(_error);
+            }
 
             if ($scope.isDefined(error.data.detail)) {
                 $window.alert(error.data.detail);
