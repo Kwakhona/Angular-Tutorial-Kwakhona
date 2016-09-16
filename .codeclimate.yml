@@ -3,6 +3,8 @@ languages:
 engines:
   duplication:
     enabled: true
+    exclude_fingerprints:
+    - 1261da2fbcf2c1eba1a3abf10d694b58
     config:
       languages:
       - javascript
